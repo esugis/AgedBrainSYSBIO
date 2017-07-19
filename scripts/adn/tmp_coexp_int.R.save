@@ -1,0 +1,170 @@
+# This script puts together calculated coexpr scores for all affy probes.
+
+# Create the folder where current results will be written
+resdir <- "~/absb/results/adn/integration/"
+dir.create(file.path(resdir),showWarnings  =  FALSE, recursive  =  TRUE)
+
+# Set created directory as working dirrectory
+setwd(resdir)
+
+# Used libarries
+library(stats);
+library(foreach); library(doMC); cores = 10 ; registerDoMC(cores);
+library(stringr);
+library("R.utils")
+library(ncdf);
+library(gProfileR)
+pathRdata="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/scores/rdata"
+#unique selected affy probes
+load(file="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/un_sel_gsub_pr.RData")#un_sel_gsub_pr
+load(file="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/selected_affys_ensg.RData")
+
+# Set the path to the calculated RRA scores
+#pathRdata <- "~/absb/results/adn/all_probes/scores/rdata"
+# Load unique selected affy probes
+#load(file = "~/absb/results/adn/all_probes/un_sel_gsub_pr.RData")
+#load(file = "~/absb/results/adn/all_probes/selected_affys_ensg.RData")
+
+# un_sel_gsub_pr contains  probe nameswith changed"-", but "/" symbols are stil present. 
+#The files in the dirrectory have different pattern.
+
+# Remove unwanted symbols
+un_sel_gsub_pr_fnames <- gsub("/","_",un_sel_gsub_pr)
+un_sel_gsub_pr_fnames <- gsub("(affx*)(\\w*)(\\_at)", "\\U\\1\\U\\2\\L\\3", un_sel_gsub_pr_fnames, perl = TRUE)
+
+# Interactions between affys, converted to ensg and stored in one df
+
+# Length of the selected unique probesets
+ll <- length(un_sel_gsub_pr)
+for(i in 1:ll){
+gene=un_sel_gsub_pr[i]
+genefname=un_sel_gsub_pr_fnames[i]
+print(gene)
+filedata=sprintf("%s.RData",genefname);
+#filedata=sprintf("%s.RData",gene)
+pathdata= file.path(pathRdata, filedata);
+load(file=pathdata)
+colnames(ar_gene)[1]="affy2"
+#select the rows that are in the un_sel_gsub_p
+ar_gene=ar_gene[ar_gene$affy2%in%un_sel_gsub_pr,]
+ar_gene=cbind(affy1=sprintf("%s",gene),ar_gene)
+ar_gene$affy2=tolower(ar_gene$affy2)
+ar_gene$affy1=tolower(ar_gene$affy1)
+#merge with corresponding ensg ids
+ar_gene_merges=merge(ar_gene,selected_affys_ensg, by.x="affy1", by.y="gsub_probes",all=F)
+#print(head(ar_gene_merges))
+ar_gene_merged=merge(ar_gene_merges,selected_affys_ensg, by.x="affy2", by.y="gsub_probes",all=F)
+ar_gene_merged=ar_gene_merged[,c(2,1,6,8,3,4)]
+
+ar_gene_merged=ar_gene_merged[ar_gene_merged$adj.pval<=0.00001,]
+###add here the aggregation of the affy scores related to the same ensg. take median
+coexp=ar_gene_merged[,3:6]
+colnames(coexp)[1:2]=c("ensg1","ensg2")
+coexp=coexp[!duplicated(coexp), ]
+coexp$gene=paste(coexp$ensg1, coexp$ensg2, sep="_")
+coexp_num=coexp[,c(4,5)]
+
+if(nrow(coexp_num)>0){
+#select probe with the best score if there are more that one probe for the same gene.
+#median we don't kee, because it's hard to understand
+coexp_num=aggregate(. ~ gene, coexp_num, max)
+coexp_num$ensg1 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 1))
+coexp_num$ensg2 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 2))
+coexp_num=coexp_num[,c(3,4,2)]
+coexp_num=cbind(coexp_num, interaction_type="coexpression")
+coexp_num=cbind(coexp_num, data_source="ADN")#alzheimer's disease and normal samples
+colnames(coexp_num)=c("ensg1","ensg2", "score", "interaction_type","data_source")
+coexp_full_ann=cbind(coexp_num,datasets="E_GEOD_18309,E_GEOD_28146,E_GEOD_29652,E_GEOD_4757,E_GEOD_5281,E_MEXP_2280")
+#coexp_full_ann=cbind(coexp_full_ann, date=paste(date))
+coexp_short=coexp_num
+colnames(coexp_short)=c("ensg1","ensg2","score", "interaction_type","data_source")
+coexp_short$interaction_type=as.character(as.vector(coexp_short$interaction_type))
+coexp_short$data_source=as.character(as.vector(coexp_short$data_source))
+#str(coexp_short)
+#print(head(coexp_short))
+#print(dim(coexp_short))
+#coexp table for the integration
+write.table(coexp_short,file="coexp_signif_int.txt",append=TRUE,sep="\t", quote=F, row.names=F,col.names=F)
+#write append to txt file
+#write.table(coexp_num,file="coexp_int_all_against_all.txt",append=TRUE,sep="\t", quote=F, row.names=F,col.names=F)#ints
+# coexp for each dataset and date when dataset was assembled
+#write.table(coexp_full_ann,file="coexp_full_ann.txt",append=TRUE,sep="\t", quote=F, row.names=F,col.names=F)#file contains the interaction and annotations
+}}
+
+
+
+
+
+#for(i in 1:ll){
+for(i in 1:3){
+gene <- un_sel_gsub_pr[i]
+genefname <- un_sel_gsub_pr_fnames[i]
+
+# Get the name
+filedata <- sprintf("%s.RData",genefname);
+
+# Set the path to the file
+pathdata <-  file.path(pathRdata, filedata);
+
+# Load the file
+load(file = pathdata)
+colnames(ar_gene)[1] <- "affy2"
+
+# Select the rows that are in the un_sel_gsub_p
+ar_gene <- ar_gene[ar_gene$affy2%in%un_sel_gsub_pr,]
+ar_gene <- cbind(affy1 = sprintf("%s",gene),ar_gene)
+ar_gene$affy2 <- tolower(ar_gene$affy2)
+ar_gene$affy1 <- tolower(ar_gene$affy1)
+
+# Merge with corresponding ensg ids
+ar_gene_merges <- merge(ar_gene,selected_affys_ensg, by.x = "affy1", by.y = "gsub_probes",all = F)
+
+# Print(head(ar_gene_merges))
+ar_gene_merged <- merge(ar_gene_merges,selected_affys_ensg, by.x = "affy2", by.y = "gsub_probes",all = F)
+ar_gene_merged <- ar_gene_merged[,c(2,1,6,8,3,4)]
+
+# Cut off p-value > 0.00001 instead of 0.05
+ar_gene_merged <- ar_gene_merged[ar_gene_merged$adj.pval< = 0.00001,]
+
+coexp <- ar_gene_merged[,3:6]
+colnames(coexp)[1:2] <- c("ensg1","ensg2")
+coexp <- coexp[!duplicated(coexp), ]
+coexp$gene <- paste(coexp$ensg1, coexp$ensg2, sep = "_")
+coexp_num <- coexp[,c(4,5)]
+
+if(nrow(coexp_num)>0){
+# Aggregate the scores in case few probesets match to the same gene
+coexp_num <- aggregate(. ~ gene, coexp_num, max)
+coexp_num$ensg1 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 1))
+coexp_num$ensg2 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 2))
+coexp_num <- coexp_num[,c(3,4,2)]
+coexp_num <- cbind(coexp_num, interaction_type = "coexpression")
+
+# Alzheimer's disease and normal samples
+coexp_num <- cbind(coexp_num, evidence_code = "ADN")
+colnames(coexp_num) <- c("ensg1","ensg2", "score", "interaction_type","data_source")
+#coexp_full_ann <- cbind(coexp_num,datasets = "E_GEOD_18309,E_GEOD_28146,E_GEOD_29652,E_GEOD_4757,E_GEOD_5281,E_MEXP_2280")
+
+coexp_short <- coexp_num
+colnames(coexp_short) <- c("ensg1","ensg2","score","interaction_type","data_source")
+coexp_short$interaction_type <- as.character(as.vector(coexp_short$interaction_type))
+coexp_short$data_source <- as.character(as.vector(coexp_short$data_source))
+#str(coexp_short)
+#print(head(coexp_short))
+#print(dim(coexp_short))
+
+# Coexp table for the integration
+write.table(coexp_short,file = "coexp_signif_int.txt",append = TRUE,sep = "\t", quote = F, row.names = F,col.names = F)
+
+# Write append to txt file 
+#write.table(coexp_num,file = "coexp_int_all_against_all.txt",append = TRUE,sep = "\t", quote = F, row.names = F,col.names = F)#ints 
+# coexp for each dataset and date when dataset was assembled
+#write.table(coexp_full_ann,file = "coexp_full_ann.txt",append = TRUE,sep = "\t", quote = F, row.names = F,col.names = F)#file contains the interaction and annotations
+}
+}
+
+# Check
+alzcoexp_int <- read.table(file = "coexp_signif_int.txt",sep = "\t",header = T)
+dim(alzcoexp_int)
+# Save in RData format
+save(alzcoexp_int, file = "alzcoexp_int.RData")
