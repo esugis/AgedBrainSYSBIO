@@ -73,6 +73,7 @@ dim(adn_coexp_int) #26633     5
 # Create one DF from separate datasets
 integrated_int <- rbind(pba_int, epistasis_all_int, intact_int, alz_intact_int,syn_intact_int,adn_coexp_int)
 integrated_int <- integrated_int[!duplicated(integrated_int),]
+colnames(integrated_int)<-c("ensg.A","ensg.B")
 
 save(integrated_int, file = "integrated_int.RData")
 write.table(integrated_int, file = "integrated_int.txt", sep="\t", quote=F, row.names=F)
