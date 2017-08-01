@@ -185,8 +185,10 @@ colnames(pba_ppi.hs_int)[c(1,2,3)] <- c("ensg1","ensg2","score")
 dim(pba_ppi.hs_int) #2313
 
 pba_int<- pba_ppi.hs_int
+# Remove duplicates
+pba_int <- pba_int[!duplicated(pba_int),]
 
-# Save the part of the integrated dataset related to hyberature interactions in HS.
+# Save the part of the integrated dataset related to interactions in HS.
 save(pba_int, file = "pba_int.RData")
 write.table(pba_int, file = "pba_int.txt", sep = "\t", quote = F, row.names = F)
 
