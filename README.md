@@ -14,7 +14,7 @@ This file contains information about the structure of the files and some useful 
 ## STRUCTURE
 
 The following projects is organised in the following structure that you can use in your analysis:
-The main catalogue of the project is ~/absb (where ~ stands for your home dirrectory).
+The main catalogue of the project is ~/AgedBrainSYSBIO (where ~ stands for your home dirrectory).
 Project is divided into 3 major parts:
  ~/AgedBrainSYSBIO/data  a place to store downloaded datasets
  ~/AgedBrainSYSBIO/scripts a place to store analysis scripts
