@@ -22,7 +22,7 @@ Project is divided into 3 major parts:
 
 ## DATA
 
-Data is stored in the folder ~/absb/data
+Data is stored in the folder ~/AgedBrainSYSBIO/data
 Folder ~/absb/data contains sub-folders for individual data types used in the analysis.
 If you follow the structure of the project , please use the folders to upload the corresponding data sets.
  ~/AgedBrainSYSBIO/data/adn is for microarrays in .nc format
@@ -42,7 +42,7 @@ For easier organisation of your project you can save the uploaded data into the 
 ### 2. Scripts related to the calculation of interactions are located in the following folders:
 
 #### 2.2 Calculation of gene co-expression using microarray data. 
-Loction: " ~/absb/scripts/adn” 
+Loction: " ~/AgedBrainSYSBIO/scripts/adn” 
 2.2.1 Filtering out probesets with SD < 0.29. Extracting Alzheimer’s related and healthy samples from the data sets. Calculating the co-expression between  all probesets in each of the data sets using  Spearman correlation coefficient. For each individual probeset in each of the datasets script creates 2 separate files in .txt and .RData formats. Files are named after the probeset. Created files contain the names of the correlated probesets and the corresponding Spearman coefficient.
 E_GEOD_28146.R
 E_GEOD_4757.R
@@ -126,7 +126,7 @@ Location : “ ~/AgedBrainSYSBIO/scripts/integration”
 4.2 All the nodes attributes are combined using integrate_node_attributes.R script.
 
 ## RESULTS
-#### Intermediate results are saved as .RData objects and as .txt files with the corresponding names in the folder  "~/absb/results/".
+#### Intermediate results are saved as .RData objects and as .txt files with the corresponding names in the folder  "~/AgedBrainSYSBIO/results/".
 
 Microarrays in .nc format "~/AgedBrainSYSBIO/results/adn/"  
 
