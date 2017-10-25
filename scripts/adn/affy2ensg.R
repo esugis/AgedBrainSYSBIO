@@ -3,7 +3,7 @@
 # Set working director
 
 # Create the folder where current results will be written
-resdir<-"~/absb/results/adn/all_probes"
+resdir<-"~/AgedBrainSYSBIO/results/adn/all_probes"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -19,15 +19,15 @@ library(gProfileR)
 
 
 # Load the probeset names in each of the datasets after("-" and "_" in the original names were substituted with "_") 
-load(file="~/absb/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
-load(file="~/absb/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
-load(file="~/absb/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
-load(file="~/absb/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
-load(file="~/absb/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
-load(file="~/absb/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
 
 # Path to the folder where affy2ensg results will be written
-path_affy_ensg="~/absb/results/adn/all_probes/"
+path_affy_ensg="~/AgedBrainSYSBIO/results/adn/all_probes/"
 
 # Select unique names in all the lists
 gene_list=unique(c(E_GEOD_18309_pr, E_GEOD_28146_pr, E_GEOD_29652_pr, E_GEOD_4757_pr, E_GEOD_5281_pr, E_MEXP_2280_pr))
@@ -51,7 +51,7 @@ save(affy2ensg, file="affy2ensg.RData")
 
 
 # Extract original probesets' names from E-GEOD-18309
-E_GEOD_18309<- open.ncdf("~/absb/data/adn/E-GEOD-18309.nc");
+E_GEOD_18309<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-18309.nc");
 get.var.ncdf(E_GEOD_18309, "MetadataOrder")
 
 # Select only Alzheimer related samples based on the additional info in the ArrayExpress
@@ -74,14 +74,14 @@ ds_genes=colnames(m)
 E_GEOD_18309_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name. E_GEOD_18309_pr
-load (file="~/absb/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
+load (file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
 
 # Identify how namy probes have names containing "-" and "/"
 E_GEOD_18309_no=E_GEOD_18309_pr_init[!E_GEOD_18309_pr_init%in%E_GEOD_18309_pr]
 length( E_GEOD_18309_no)
 
 # Extract original probesets' names from E_GEOD_28146
-E_GEOD_28146<- open.ncdf("~/absb/data/adn/E-GEOD-28146.nc");
+E_GEOD_28146<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-28146.nc");
 get.var.ncdf(E_GEOD_28146, "disease_status")
 data_E_GEOD_28146=get.var.ncdf(E_GEOD_28146, "data")
 rownames(data_E_GEOD_28146)=get.var.ncdf(E_GEOD_28146, "MetadataOrder")
@@ -101,14 +101,14 @@ ds_genes=colnames(m)
 E_GEOD_28146_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name. 
-load (file="~/absb/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
+load (file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
 
 # Identify how namy probes have names containing "-" and "/"
 E_GEOD_28146_no=E_GEOD_28146_pr_init[!E_GEOD_28146_pr_init%in%E_GEOD_28146_pr]
 length(E_GEOD_28146_no)#9
 
 # Extract original probesets' names from E-GEOD-29652
-E_GEOD_29652<- open.ncdf("~/absb/data/adn/E-GEOD-29652.nc");
+E_GEOD_29652<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-29652.nc");
 data_E_GEOD_29652=get.var.ncdf(E_GEOD_29652, "data")
 rownames(data_E_GEOD_29652)=get.var.ncdf(E_GEOD_29652, "MetadataOrder")
 colnames(data_E_GEOD_29652)=get.var.ncdf(E_GEOD_29652,"gene")
@@ -126,7 +126,7 @@ ds_genes=colnames(m)
 E_GEOD_29652_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name.
-load (file="/absb/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
+load (file="/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
 
 # Identify how namy probes have names containing "-" and "/"
 E_GEOD_29652_no=E_GEOD_29652_pr_init[!E_GEOD_29652_pr_init%in%E_GEOD_29652_pr]
@@ -134,7 +134,7 @@ length(E_GEOD_29652_no)
 
 
 # Extract original probesets' names from E_GEOD_4757
-E_GEOD_4757<- open.ncdf("~/absb/data/adn/E-GEOD-4757.nc");
+E_GEOD_4757<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-4757.nc");
 data_E_GEOD_4757=get.var.ncdf(E_GEOD_4757, "data")
 rownames(data_E_GEOD_4757)=get.var.ncdf(E_GEOD_4757, "Phenotype")
 colnames(data_E_GEOD_4757)=get.var.ncdf(E_GEOD_4757,"gene")
@@ -151,14 +151,14 @@ ds_genes=colnames(m)
 E_GEOD_4757_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name.
-load (file="/absb/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
+load (file="/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
 
 # Identify how namy probes have names containing "-" and "/"
 E_GEOD_4757_no=E_GEOD_4757_pr_init[!E_GEOD_4757_pr_init%in%E_GEOD_4757_pr]
 length(E_GEOD_4757_no)
 
 # Extract original probesets' names from E_GEOD_5281
-E_GEOD_5281<- open.ncdf("~/absb/data/adn/E-GEOD-5281.nc");
+E_GEOD_5281<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-5281.nc");
 data_E_GEOD_5281=get.var.ncdf(E_GEOD_5281 , "data")
 rownames(data_E_GEOD_5281 )=get.var.ncdf(E_GEOD_5281 , "DiseaseState")
 colnames(data_E_GEOD_5281 )=get.var.ncdf(E_GEOD_5281 ,"gene")
@@ -177,14 +177,14 @@ ds_genes=colnames(m)
 E_GEOD_5281_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name.
-load (file="~/absb/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
+load (file="~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
 
 # Identify how namy probes have names containing "-" and "/"
 E_GEOD_5281_no=E_GEOD_5281_pr_init[!E_GEOD_5281_pr_init%in%E_GEOD_5281_pr]
 length(E_GEOD_5281_no)
 
 # Extract original probesets' names from E_MEXP_2280
-E_MEXP_2280<- open.ncdf("~/absb/data/adn/E-MEXP-2280.nc");
+E_MEXP_2280<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-MEXP-2280.nc");
 data_E_MEXP_2280=get.var.ncdf(E_MEXP_2280 , "data")
 rownames(data_E_MEXP_2280)=get.var.ncdf(E_MEXP_2280 , "DiseaseState")
 colnames(data_E_MEXP_2280)=get.var.ncdf(E_MEXP_2280 ,"gene")
@@ -203,7 +203,7 @@ ds_genes=colnames(m)
 E_MEXP_2280_pr_init=ds_genes
 
 # Load gsub corrected variant where "-" and "\" are changed to "_" to use probeset name as afile name.
-load (file="~/absb/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
+load (file="~/AgedBrainSYSBIO/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
 E_MEXP_2280_no=E_MEXP_2280_pr_init[!E_MEXP_2280_pr_init%in%E_MEXP_2280_pr]
 length(E_MEXP_2280_no)
 
@@ -212,7 +212,7 @@ length(E_MEXP_2280_no)
 # Find all affys that differ from original names
 
 initial_probes=unique(c(E_MEXP_2280_pr_init,E_GEOD_5281_pr_init,E_GEOD_4757_pr_init,E_GEOD_18309_pr_init,E_GEOD_28146_pr_init,E_GEOD_29652_pr_init))
-save(initial_probes, file="~/absb/results/adn/all_probes/initial_probes_6ds.RData")
+save(initial_probes, file="~/AgedBrainSYSBIO/results/adn/all_probes/initial_probes_6ds.RData")
 
 # Create a dataframe with original names and the names with substitured "-" and "/" with "_"
 gsub_probes=gsub("-", "_",initial_probes)

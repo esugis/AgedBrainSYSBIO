@@ -1,7 +1,7 @@
 # This script puts together calculated coexpr scores for all affy probes.
 
 # Create the folder where current results will be written
-resdir <- "~/absb/results/adn/integration/"
+resdir <- "~/AgedBrainSYSBIO/results/adn/integration/"
 dir.create(file.path(resdir),showWarnings  =  FALSE, recursive  =  TRUE)
 
 # Set created directory as working dirrectory
@@ -14,16 +14,13 @@ library(stringr);
 library("R.utils")
 library(ncdf);
 library(gProfileR)
-pathRdata="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/scores/rdata"
-#unique selected affy probes
-load(file="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/un_sel_gsub_pr.RData")#un_sel_gsub_pr
-load(file="/home/nikolaeva/AgedBrain/ppi2_data/alzcoexp/all_probes/selected_affys_ensg.RData")
 
 # Set the path to the calculated RRA scores
-#pathRdata <- "~/absb/results/adn/all_probes/scores/rdata"
+pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/rdata"
+
 # Load unique selected affy probes
-#load(file = "~/absb/results/adn/all_probes/un_sel_gsub_pr.RData")
-#load(file = "~/absb/results/adn/all_probes/selected_affys_ensg.RData")
+load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/un_sel_gsub_pr.RData")
+load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/selected_affys_ensg.RData")
 
 # un_sel_gsub_pr contains  probe nameswith changed"-", but "/" symbols are stil present. 
 #The files in the dirrectory have different pattern.

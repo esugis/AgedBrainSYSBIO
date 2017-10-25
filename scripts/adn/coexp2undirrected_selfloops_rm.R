@@ -1,13 +1,13 @@
 # This script takes the all to all probes interactions
 # From 2 corresponding pairs ENSG1-ENSG2 and ENSG2-ENSG1 selects the conservative RRA score
 # It also removes interaction with gene itself(self-loop)
-# The initial dataset is stored in ~/absb/results/adn/integration/
+# The initial dataset is stored in ~/AgedBrainSYSBIO/results/adn/integration/
 
 # Set working directory
-setwd("~/absb/results/adn/integration/")
+setwd("~/AgedBrainSYSBIO/results/adn/integration/")
 
 # Load the coexpression interactions dataset
-load(file = "~/absb/results/adn/integration/alzcoexp_int.RData")
+load(file = "~/AgedBrainSYSBIO/results/adn/integration/alzcoexp_int.RData")
 
 # Correct the colnames
 
@@ -64,6 +64,6 @@ for (i in 1:length(test$ensg12)){
 outDF <- outDF[-1,]
 outDF <- outDF[!duplicated(outDF),]
 adn_coexp_pairs_int<- outDF
-save(adn_coexp_pairs_int , file = "~/absb/results/adn/integration/adn_coexp_pairs_int.RData")
-write.table(adn_coexp_pairs_int, file = "~/absb/results/adn/integration/adn_coexp_pairs_int.txt", quote = F, sep = "\t",row.names = F)
+save(adn_coexp_pairs_int , file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_pairs_int.RData")
+write.table(adn_coexp_pairs_int, file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_pairs_int.txt", quote = F, sep = "\t",row.names = F)
 dim(adn_coexp_pairs_int) 

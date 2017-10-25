@@ -15,7 +15,7 @@ library(ncdf);
 
 # Open dataset in NetCDF format
 # Please indicate the path to the saved .nc file, e.g. as shown below
-E_GEOD_29652 <- open.ncdf("~/absb/data/adn/E-GEOD-29652.nc"); 
+E_GEOD_29652 <- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-29652.nc"); 
 
 # Extract only Alzheimer and healthy saples from E_GEOD_29652
 # List of variable in E_GEOD_29652
@@ -45,8 +45,8 @@ dim(data_E_GEOD_29652_filt)
 m=t(data_E_GEOD_29652_filt)
 
 # Path to the foldet where results will be saved
-pathRdata <- "~/absb/results/adn/all_probes/rdata/E_GEOD_29652/"
-pathtxt <- "~/absb/results/adn/all_probes/txt/E_GEOD_29652/"
+pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_29652/"
+pathtxt <- "~/AgedBrainSYSBIO/results/adn/all_probes/txt/E_GEOD_29652/"
 
 # Create directories
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
@@ -78,6 +78,6 @@ foreach(i = 1:length(ds_genes)) %dopar%{
 
 # Exract the list of probesets
 E_GEOD_29652_pr <- colnames(m)
-save(E_GEOD_29652_pr, file = "~/absb/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
+save(E_GEOD_29652_pr, file = "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
 
 
