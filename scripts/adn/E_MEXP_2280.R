@@ -1,4 +1,3 @@
-
 # This script:
 # Extracts Alzheimer’s related and healthy samples from the data sets.
 # Filters out probesets with SD < 0.29.
@@ -17,7 +16,7 @@ library(ncdf);
 
 # Open dataset in NetCDF format
 # Please indicate the path to the saved .nc file, e.g. as shown below
-E_MEXP_2280<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-MEXP-2280.nc");  
+E_MEXP_2280 <- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-MEXP-2280.nc");  
 
 # Extract only Alzheimer and healthy saples from E_GEOD_5281
 # List of variable in E_GEOD_5281 
@@ -25,10 +24,10 @@ names(E_MEXP_2280$var)
 get.var.ncdf(E_MEXP_2280 , "DiseaseState")
 
 # Select only Alzheimer's disease and healthy  samples
-data_E_MEXP_2280=get.var.ncdf(E_MEXP_2280 , "data")
-rownames(data_E_MEXP_2280)=get.var.ncdf(E_MEXP_2280 , "DiseaseState")
-colnames(data_E_MEXP_2280)=get.var.ncdf(E_MEXP_2280 ,"gene")
-data_E_MEXP_2280=t(data_E_MEXP_2280)
+data_E_MEXP_2280 <- get.var.ncdf(E_MEXP_2280 , "data")
+rownames(data_E_MEXP_2280) <- get.var.ncdf(E_MEXP_2280 , "DiseaseState")
+colnames(data_E_MEXP_2280) <- get.var.ncdf(E_MEXP_2280 ,"gene")
+data_E_MEXP_2280 <- t(data_E_MEXP_2280)
 
 #Dimention of the data
 dim(data_E_MEXP_2280)
@@ -37,16 +36,16 @@ dim(data_E_MEXP_2280)
 close.ncdf(E_MEXP_2280)
 
 # Rename the samples
-data_E_MEXP_2280=data_E_MEXP_2280[,colnames(data_E_MEXP_2280)%in%c("Alzheimer's disease", "normal")]
-colnames(data_E_MEXP_2280)=gsub("normal","norm", colnames(data_E_MEXP_2280))
-colnames(data_E_MEXP_2280)=gsub("Alzheimer's Disease","alz", colnames(data_E_MEXP_2280))
+data_E_MEXP_2280 <- data_E_MEXP_2280[,colnames(data_E_MEXP_2280)%in%c("Alzheimer's disease", "normal")]
+colnames(data_E_MEXP_2280) <- gsub("normal","norm", colnames(data_E_MEXP_2280))
+colnames(data_E_MEXP_2280) <- gsub("Alzheimer's Disease","alz", colnames(data_E_MEXP_2280))
 
 # Filter  out rows with SD values less then 0.29
-SD = apply(data_E_MEXP_2280, 1, sd, na.rm = T)
-data_E_MEXP_2280_filt=data_E_MEXP_2280[SD >= 0.29, ]
+SD <- apply(data_E_MEXP_2280, 1, sd, na.rm = T)
+data_E_MEXP_2280_filt <- data_E_MEXP_2280[SD >= 0.29, ]
 dim(data_E_MEXP_2280_filt)                           
 
-m=t(data_E_MEXP_2280_filt)
+m<-t(data_E_MEXP_2280_filt)
 length(ds_genes <- colnames(m))
 
 # Path to the foldet where results will be saved
@@ -68,7 +67,7 @@ ds_genes <- colnames(m)
 
 foreach(i = 1:length(ds_genes)) %dopar%{
   cor1gds <- c() # Corelation for one gene in one ds
-   gene=ds_genes[i];
+   gene<-ds_genes[i];
    vect <- m[,i];
    cor1gds <- t(cor(vect, m, method = "spearman"))
    # Print(cor1gds[1:3,1:3])

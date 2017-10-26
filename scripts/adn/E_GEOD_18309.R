@@ -37,14 +37,14 @@ close.ncdf(E_GEOD_18309)
 # Extract and rename only Alzheimer and healthy saples   
 colnames(data_E_GEOD_18309)[1:3] <- "alz"
 colnames(data_E_GEOD_18309)[7:9] <- "norm"
-data_E_GEOD_18309=data_E_GEOD_18309[,c(1:3,7:9)]
+data_E_GEOD_18309 <- data_E_GEOD_18309[,c(1:3,7:9)]
 
 # Filter out rows with SD values less then 0.29
-SD <-  apply(data_E_GEOD_18309, 1, sd, na.rm = T)
+SD <- apply(data_E_GEOD_18309, 1, sd, na.rm = T)
 data_E_GEOD_18309_filt <- data_E_GEOD_18309[SD >= 0.29, ]
 
 # Dimentions of the filtered dataset
-dim(data_E_GEOD_18309_filt)                           
+dim(data_E_GEOD_18309_filt)                        
 
 # Gene names
 m <- t(data_E_GEOD_18309_filt)
@@ -62,7 +62,7 @@ colnames(m) <- gsub("-", "_",colnames(m))
 colnames(m) <- gsub("/", "_",colnames(m))
 
 # Probesets
-ds_genes=colnames(m)
+ds_genes <- colnames(m)
 
 
 # Compute Sperman correlation between expression profiles of probesets "all against all".

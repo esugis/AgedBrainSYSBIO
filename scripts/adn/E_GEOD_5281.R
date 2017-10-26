@@ -1,4 +1,3 @@
-
 # This script:
 # Extracts Alzheimer’s related and healthy samples from the data sets.
 # Filters out probesets with SD < 0.29.
@@ -47,7 +46,7 @@ data_E_GEOD_5281_filt <- data_E_GEOD_5281[SD >= 0.29, ]
 # Dimentions of the filtered data
 dim(data_E_GEOD_5281_filt)                           
 
-m=t(data_E_GEOD_5281_filt)
+m <- t(data_E_GEOD_5281_filt)
 length(ds_genes <- colnames(m))
 
 
@@ -70,7 +69,7 @@ ds_genes <- colnames(m)
 
 foreach(i = 1:length(ds_genes)) %dopar%{
   cor1gds <- c() # Corelation for one gene in one ds
-   gene=ds_genes[i];
+   gene<-ds_genes[i];
    vect <- m[,i];
    cor1gds <- t(cor(vect, m, method = "spearman"))
    # Print(cor1gds[1:3,1:3])

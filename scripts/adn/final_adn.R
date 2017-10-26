@@ -12,15 +12,15 @@
 # Load ds with cut off 0.00001
 load(file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_pairs_int.RData")
 dim(adn_coexp_pairs_int)
-alzcoexp_int<-adn_coexp_pairs_int
+alzcoexp_int <- adn_coexp_pairs_int
 
 # Remove columns 4, 5
-alzcoexp_int<-alzcoexp_int[,1:3]
+alzcoexp_int <- alzcoexp_int[,1:3]
 
 # Add columns interaction_type, data_source
-alzcoexp_int=cbind(alzcoexp_int, interaction_type="coexpression")
-alzcoexp_int=cbind(alzcoexp_int, data_source="ADN") # Stands for alzheimer's disease and normal samples
-colnames(alzcoexp_int)=c("ensg1","ensg2", "score", "interaction_type","data_source")
+alzcoexp_int <- cbind(alzcoexp_int, interaction_type = "coexpression")
+alzcoexp_int <- cbind(alzcoexp_int, data_source = "ADN") # Stands for alzheimer's disease and normal samples
+colnames(alzcoexp_int) <- c("ensg1","ensg2", "score", "interaction_type","data_source")
 
 # Check the size
 dim(alzcoexp_int)
@@ -33,7 +33,7 @@ dim(alzcoexp_int)
 
 head(alzcoexp_int)
 adn_coexp_int <- alzcoexp_int
-save(adn_coexp_int, file="~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.RData")
-write.table(adn_coexp_int,file="~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.txt", quote=F, sep="\t",row.names=F)
+save(adn_coexp_int, file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.RData")
+write.table(adn_coexp_int,file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.txt", quote = F, sep = "\t",row.names = F)
 
 

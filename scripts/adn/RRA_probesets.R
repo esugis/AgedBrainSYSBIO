@@ -21,7 +21,7 @@ load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_MEXP_2280_all_probes.RD
 genes <- unique(c(E_GEOD_18309_pr, E_GEOD_28146_pr, E_GEOD_29652_pr, E_GEOD_4757_pr, E_GEOD_5281_pr, E_MEXP_2280_pr))
 dim(genes)
 
-# Paths to the  coexpression results in each dataset
+# Paths to the coexpression results in each dataset
 pathRdata_E_GEOD_18309 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_18309/"
 pathRdata_E_GEOD_28146 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_28146/"
 pathRdata_E_GEOD_29652 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_29652/"
@@ -33,13 +33,12 @@ library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 foreach(i = 1:length(genes)) %dopar%{
 gene <- genes[i]
 	filedata <- sprintf("%s.RData",gene);
-        pathdata_E_GEOD_18309 <-  file.path(pathRdata_E_GEOD_18309, filedata);
-
-	pathdata_E_GEOD_28146 <-  file.path(pathRdata_E_GEOD_28146, filedata);
-	pathdata_E_GEOD_29652 <-  file.path(pathRdata_E_GEOD_29652, filedata);
-	pathdata_E_GEOD_4757 <-  file.path(pathRdata_E_GEOD_4757, filedata);
-	pathdata_E_GEOD_5281 <-  file.path(pathRdata_E_GEOD_5281, filedata);
-	pathdata_E_MEXP_2280 <-  file.path(pathRdata_E_MEXP_2280, filedata);
+        pathdata_E_GEOD_18309 <- file.path(pathRdata_E_GEOD_18309, filedata);
+	pathdata_E_GEOD_28146 <- file.path(pathRdata_E_GEOD_28146, filedata);
+	pathdata_E_GEOD_29652 <- file.path(pathRdata_E_GEOD_29652, filedata);
+	pathdata_E_GEOD_4757 <- file.path(pathRdata_E_GEOD_4757, filedata);
+	pathdata_E_GEOD_5281 <- file.path(pathRdata_E_GEOD_5281, filedata);
+	pathdata_E_MEXP_2280 <- file.path(pathRdata_E_MEXP_2280, filedata);
 
 
  	if ((gene%in%E_GEOD_18309_pr)==T){
@@ -84,11 +83,11 @@ glist <- glist[!glist%in%0]
 
 # Aggregate the ranks
 library(RobustRankAggreg)
-r  <-  rankMatrix(glist)
+r <- rankMatrix(glist)
 ar_gene <- aggregateRanks(rmat = r, method = "RRA")
 
 # Correction for multiple testing
-ar_gene$adj.pval  <-  p.adjust(ar_gene$Score, method = "fdr")
+ar_gene$adj.pval <- p.adjust(ar_gene$Score, method = "fdr")
 head(ar_gene)
 filename <- sprintf("%s.txt",gene);
 filedata <- sprintf("%s.RData",gene);
@@ -96,7 +95,7 @@ filedata <- sprintf("%s.RData",gene);
 # Path name to save the results
 pathdata_scores <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/rdata/"
 pathtxt_scores <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/txt/"
-pathname <-  file.path(pathtxt_scores, filename);
+pathname <- file.path(pathtxt_scores, filename);
 pathdata <- file.path(pathdata_scores, filedata);
 write.table(ar_gene, file=pathname, sep="\t", quote=F, row.names=F);
 save(ar_gene,file=pathdata)

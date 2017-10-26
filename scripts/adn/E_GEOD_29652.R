@@ -1,7 +1,7 @@
 # This script:
 # Extracts Alzheimer’s related and healthy samples from the data sets.
 # Filters out probesets with SD < 0.29.
-# Calculating the co-expression between  all probesets in each of the data sets using Spearman correlation coefficient.
+# Calculating the co-expression between all probesets in each of the data sets using Spearman correlation coefficient.
 # For each individual probeset in each of the datasets script creates 2 separate files in .txt and .RData formats.
 # Files are named after the probeset.
 # Created files contain the names of the correlated probesets and the corresponding Spearman coefficient.
@@ -21,7 +21,7 @@ E_GEOD_29652 <- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-29652.nc");
 # List of variable in E_GEOD_29652
 names(E_GEOD_29652$var)
 
-# Select only Alzheimer's disease and healthy  samples
+# Select only Alzheimer's disease and healthy samples
 data_E_GEOD_29652 <- get.var.ncdf(E_GEOD_29652, "data")
 rownames(data_E_GEOD_29652) <- get.var.ncdf(E_GEOD_29652, "MetadataOrder")
 colnames(data_E_GEOD_29652)<- get.var.ncdf(E_GEOD_29652,"gene")
@@ -35,14 +35,12 @@ close.ncdf(E_GEOD_29652)
 
 # Rename the samples
 colnames(data_E_GEOD_29652)[1:18]="alz"
-#colnames(data_E_GEOD_29652)[23:30]="norm"
 
-# Filter  out rows with SD values less then 0.29
+# Filter out rows with SD values less then 0.29
 SD <- apply(data_E_GEOD_29652, 1, sd, na.rm = T)
 data_E_GEOD_29652_filt <- data_E_GEOD_29652[SD >= 0.29, ]
-dim(data_E_GEOD_29652_filt)                           
-
-m=t(data_E_GEOD_29652_filt)
+dim(data_E_GEOD_29652_filt)                          
+m <- t(data_E_GEOD_29652_filt)
 
 # Path to the foldet where results will be saved
 pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_29652/"
@@ -57,7 +55,7 @@ colnames(m) <- gsub("-", "_",colnames(m))
 colnames(m) <- gsub("/", "_",colnames(m))
 
 ## Probesets
-ds_genes=colnames(m)
+ds_genes <- colnames(m)
 
 # Compute Sperman correlation between expression profiles of probesets "all against all".
 foreach(i = 1:length(ds_genes)) %dopar%{
@@ -74,7 +72,6 @@ foreach(i = 1:length(ds_genes)) %dopar%{
    write.table(cor1gds, file = pathname, sep = "\t", quote=F, row.names = F);
    save(cor1gds,file = pathdata)
  }
-
 
 # Exract the list of probesets
 E_GEOD_29652_pr <- colnames(m)

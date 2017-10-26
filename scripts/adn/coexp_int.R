@@ -2,14 +2,14 @@
 
 # Create the folder where current results will be written
 resdir <- "~/AgedBrainSYSBIO/results/adn/integration/"
-dir.create(file.path(resdir),showWarnings  =  FALSE, recursive  =  TRUE)
+dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
 setwd(resdir)
 
 # Used libarries
 library(stats);
-library(foreach); library(doMC); cores = 10 ; registerDoMC(cores);
+library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 library(stringr);
 library("R.utils")
 library(ncdf);
@@ -22,7 +22,7 @@ pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/rdata"
 load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/un_sel_gsub_pr.RData")
 load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/selected_affys_ensg.RData")
 
-# un_sel_gsub_pr contains  probe nameswith changed"-", but "/" symbols are stil present. 
+# un_sel_gsub_pr contains probe names with changed"-", but "/" symbols are stil present. 
 #The files in the dirrectory have different pattern.
 
 # Remove unwanted symbols
@@ -38,62 +38,61 @@ for(i in 1:ll){
 
 # Get the name
 gene=un_sel_gsub_pr[i]
-genefname=un_sel_gsub_pr_fnames[i]
+genefname <- un_sel_gsub_pr_fnames[i]
 print(gene)
 
 # Set the path to the file
-filedata=sprintf("%s.RData",genefname);
-#filedata=sprintf("%s.RData",gene)
-pathdata= file.path(pathRdata, filedata);
+filedata <- sprintf("%s.RData",genefname);
+pathdata <- file.path(pathRdata, filedata);
 
 # Load the file
-load(file=pathdata)
-colnames(ar_gene)[1]="affy2"
+load(file = pathdata)
+colnames(ar_gene)[1] <-"affy2"
 
 # Select the rows that are in the un_sel_gsub_p
-ar_gene=ar_gene[ar_gene$affy2%in%un_sel_gsub_pr,]
-ar_gene=cbind(affy1=sprintf("%s",gene),ar_gene)
+ar_gene <- ar_gene[ar_gene$affy2%in%un_sel_gsub_pr,]
+ar_gene <- cbind(affy1 = sprintf("%s",gene),ar_gene)
 
 # Convert to lower case
-ar_gene$affy2=tolower(ar_gene$affy2)
-ar_gene$affy1=tolower(ar_gene$affy1)
+ar_gene$affy2 <- tolower(ar_gene$affy2)
+ar_gene$affy1 <- tolower(ar_gene$affy1)
 
 # Merge with corresponding ensg ids
-ar_gene_merges=merge(ar_gene,selected_affys_ensg, by.x="affy1", by.y="gsub_probes",all=F)
-ar_gene_merged=merge(ar_gene_merges,selected_affys_ensg, by.x="affy2", by.y="gsub_probes",all=F)
-ar_gene_merged=ar_gene_merged[,c(2,1,6,8,3,4)]
+ar_gene_merges <- merge(ar_gene,selected_affys_ensg, by.x = "affy1", by.y = "gsub_probes",all = F)
+ar_gene_merged <- merge(ar_gene_merges,selected_affys_ensg, by.x = "affy2", by.y = "gsub_probes",all = F)
+ar_gene_merged <- ar_gene_merged[,c(2,1,6,8,3,4)]
 
 # Cut off p-value > 0.00001 instead of 0.05
-ar_gene_merged=ar_gene_merged[ar_gene_merged$adj.pval<=0.00001,]
+ar_gene_merged <- ar_gene_merged[ar_gene_merged$adj.pval<=0.00001,]
 
-coexp=ar_gene_merged[,3:6]
-colnames(coexp)[1:2]=c("ensg1","ensg2")
-coexp=coexp[!duplicated(coexp), ]
-coexp$gene=paste(coexp$ensg1, coexp$ensg2, sep="_")
-coexp_num=coexp[,c(4,5)]
+coexp <- ar_gene_merged[,3:6]
+colnames(coexp)[1:2] <- c("ensg1","ensg2")
+coexp <- coexp[!duplicated(coexp), ]
+coexp$gene <- paste(coexp$ensg1, coexp$ensg2, sep = "_")
+coexp_num <- coexp[,c(4,5)]
 
 if(nrow(coexp_num)>0){
 
 # Aggregate the scores in case few probesets match to the same gene
-coexp_num=aggregate(. ~ gene, coexp_num, max)
+coexp_num <- aggregate(. ~ gene, coexp_num, max)
 coexp_num$ensg1 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 1))
 coexp_num$ensg2 <- unlist(lapply(strsplit(as.character(coexp_num$gene), "_"), "[", 2))
-coexp_num=coexp_num[,c(3,4,2)]
-coexp_num=cbind(coexp_num, interaction_type="coexpression")
+coexp_num <- coexp_num[,c(3,4,2)]
+coexp_num <- cbind(coexp_num, interaction_type = "coexpression")
 
 # Alzheimer's disease and normal samples
-coexp_num=cbind(coexp_num, data_source="ADN")
-colnames(coexp_num)=c("ensg1","ensg2", "score", "interaction_type","data_source")
-coexp_full_ann=cbind(coexp_num,datasets="E_GEOD_18309,E_GEOD_28146,E_GEOD_29652,E_GEOD_4757,E_GEOD_5281,E_MEXP_2280")
-coexp_short=coexp_num
+coexp_num <- cbind(coexp_num, data_source = "ADN")
+colnames(coexp_num) <- c("ensg1","ensg2", "score", "interaction_type","data_source")
+coexp_full_ann <- cbind(coexp_num,datasets = "E_GEOD_18309,E_GEOD_28146,E_GEOD_29652,E_GEOD_4757,E_GEOD_5281,E_MEXP_2280")
+coexp_short <- coexp_num
 
 # Add colnames
-colnames(coexp_short)=c("ensg1","ensg2","score", "interaction_type","data_source")
-coexp_short$interaction_type=as.character(as.vector(coexp_short$interaction_type))
-coexp_short$data_source=as.character(as.vector(coexp_short$data_source))
+colnames(coexp_short) <- c("ensg1","ensg2","score", "interaction_type","data_source")
+coexp_short$interaction_type <- as.character(as.vector(coexp_short$interaction_type))
+coexp_short$data_source <- as.character(as.vector(coexp_short$data_source))
 
 # Coexp table for the integration
-write.table(coexp_short,file="coexp_signif_int.txt",append=TRUE,sep="\t", quote=F, row.names=F,col.names=F)
+write.table(coexp_short,file = "coexp_signif_int.txt",append = TRUE,sep = "\t", quote = F, row.names = F,col.names = F)
 }}
 
 # Check
