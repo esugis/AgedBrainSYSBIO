@@ -1,7 +1,7 @@
 # This script processes dataset of protein-protein inteacrtions related to brain ageing (PBA) 
 
 ## Create the folder where current results will be written
-resdir <- paste("~/absb/results", "pba", sep = "/")
+resdir <- paste("~/AgedBrainSYSBIO/results", "pba", sep = "/")
 dir.create(file.path(resdir), showWarnings  =  FALSE,  recursive  =  TRUE)
 
 # Set created directory as working dirrectory
@@ -10,14 +10,13 @@ setwd(resdir)
 # Read in text file in xml format and save the interactions as RData
 # Please indicate the path to the downloaded data
 library(XML)
-hybxml <- xmlParse("~/AgedBrain/ppi2_data/hybrigenics/data/agedbrain_psimi25_data.xml")
+hybxml <- xmlParse("~/AgedBrainSYSBIO/data/pba/agedbrain_psimi25_data.xml")
 
 # Convert xml to list
 xml_data <- xmlToList(hybxml)
 
 # Length of the data
-length(xml_data$entry$interactionList)#the whole number of interactions by hybrigenics
-#[1] 2256
+length(xml_data$entry$interactionList)
 
 # Run example for one interaction in the data
 xml_data$entry$interactionList[[1]]$participantList$participant$interactorRef ##1st interactor ID
@@ -117,7 +116,6 @@ pba_ppi[,4] <- toupper(pba_ppi[,4])
 
 # Control the dimentions of the data
 dim(pba_ppi)
-#[1]  2256    8
 
 # Split df by organism
 
@@ -147,9 +145,9 @@ pba_ppi.mm <- pba_ppi[pba_ppi$organism%in%"Mus musculus",]
 pba_ppi.dm <- pba_ppi[pba_ppi$organism%in%"Drosophila melanogaster",]
 
 # Control the size of the data related to each of the organisms
-dim(pba_ppi.hs)# [1] 2032     8
-dim(pba_ppi.mm)# [1] 106   8
-dim(pba_ppi.dm)# 118   7
+dim(pba_ppi.hs)
+dim(pba_ppi.mm)
+dim(pba_ppi.dm)
 
 # Convert text to upper case
 pba_ppi.hs[,1] <- toupper(pba_ppi.hs[,1])
@@ -167,9 +165,9 @@ head(AB2ENSG.h)
 AB2ENSG.hyb.hs <- AB2ENSG.h
 save(AB2ENSG.hyb.hs, file = "AB2ENSG_hyb_hs.RData")#use afterwards for the description of the interactors
 
-dim(AB2ENSG.hyb.hs)#[1] 2478     2
+dim(AB2ENSG.hyb.hs)
 AB2ENSG.hyb.hs <- AB2ENSG.hyb.hs[!duplicated(AB2ENSG.hyb.hs), ]
-dim(AB2ENSG.hyb.hs)#2468   2
+dim(AB2ENSG.hyb.hs)
 
 # Merge for the first interactor
 dim(merge(pba_ppi.hs, AB2ENSG.hyb.hs, by.x = "name.p1", by.y = ".id", all = F))
@@ -182,7 +180,6 @@ save(pba_ppi.hs.p1p2, file = "pba_ppi.hs.p1p2.RData")#file describes interaction
 pba_ppi.hs_int <- cbind(pba_ppi.hs.ensg, interaction_type = "PPI")
 pba_ppi.hs_int <- cbind(pba_ppi.hs_int, data_source = "PBA")#  evidence code for Hybrigenics experimental interactions
 colnames(pba_ppi.hs_int)[c(1,2,3)] <- c("ensg1","ensg2","score")
-dim(pba_ppi.hs_int) #2313
 
 pba_int<- pba_ppi.hs_int
 # Remove duplicates
