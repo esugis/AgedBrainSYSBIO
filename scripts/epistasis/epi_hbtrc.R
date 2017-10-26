@@ -3,7 +3,11 @@
 library(gProfileR)
 
 # Read the file related to HTBRC cohort
-epi=read.table(file="~/absb/data/epistatis/HBTRC_epistatic_gene_pairs_Braak_1e-8.tsv", header=T)
+epi=read.table(file="~/AgedBrainSYSBIO/data/epistatis/HBTRC_epistatic_gene_pairs_Braak_1e-8.tsv", header=T)
+
+# Create the folder where current results will be written
+resdir <- "~/AgedBrainSYSBIO/results/epistasis/"
+dir.create(file.path(resdir),showWarnings  =  FALSE, recursive  =  TRUE)
 
 # Data size
 dim(epi)

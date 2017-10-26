@@ -3,11 +3,8 @@
 
 library(gProfileR)
 
-
 # Read the file related to ADNI cohort cognitive traits
-#epi <- read.table(file = "/home/nikolaeva/AgedBrain/ppi2_data/epistasis/data_epi/ADNI_cognitive_traits_bin-bin_interactions_07092016.txt", header = T, stringsAsFactors = FALSE)
-
-epi <- read.table(file = "~/absb/data/epistasis/ADNI_cognitive_traits.txt", header = T, stringsAsFactors = FALSE)
+epi <- read.table(file = "~/AgedBrainSYSBIO/data/epistasis/ADNI_cognitive_traits.txt", header = T, stringsAsFactors = FALSE)
 
 
 # Add ADNI general cohort code
@@ -17,7 +14,7 @@ epi$source <- paste("ADNI", epi$source, sep = "_")
 length(unique(epi$source))
 
 # Create the folder where current results will be written
-resdir<-"~/absb/results/epistasis/"
+resdir <- "~/AgedBrainSYSBIO/results/epistasis/"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
