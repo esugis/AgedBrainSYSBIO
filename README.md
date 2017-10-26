@@ -103,8 +103,11 @@ Location: “ ~/AgedBrainSYSBIO/scripts/gwas”
 #### 3.2 Processing of the gene expression datasets from Allen Brain Atlas.
 Location: “ ~/AgedBrainSYSBIO/scripts/allenbrain”
 
-3.2.1 Read in initial data and prepare data for the analysis(scripts combine expression values, sample annotations and probe annotations into matrix). Scripts for the preprocessing of the individual datasets: 
+3.2.1 Scripts for the preprocessing of the individual datasets.
+Read in initial data and prepare data for the analysis.Combine expression values, sample annotations and probe annotations into matrix.
 "aba_178236545_ds.R", "aba_178238266_ds.R", "aba_178238316_ds.R", "aba_178238359_ds.R".
+
+NB! Please make sure you have placed microarray datasets under "~/AgedBrainSYSBIO/data/allenbrain/" into the individual folders with the folling names: /178236545_ds, /178238266_ds, /178238316_ds, /178238359_ds.
 
 3.2.2 Calculate z scores in each of the tissue in all data sets "aba_zcores.R".
 
