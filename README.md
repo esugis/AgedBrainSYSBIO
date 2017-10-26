@@ -107,7 +107,7 @@ Location: “ ~/AgedBrainSYSBIO/scripts/allenbrain”
 Read in initial data and prepare data for the analysis.Combine expression values, sample annotations and probe annotations into matrix.
 "aba_178236545_ds.R", "aba_178238266_ds.R", "aba_178238316_ds.R", "aba_178238359_ds.R".
 
-NB! Please make sure you have placed microarray datasets under "~/AgedBrainSYSBIO/data/allenbrain/" into the individual folders with the folling names: /178236545_ds, /178238266_ds, /178238316_ds, /178238359_ds.
+NB! Please make sure you have placed microarray datasets under "~/AgedBrainSYSBIO/data/allenbrain/" into the individual folders with the following names: /178236545_ds, /178238266_ds, /178238316_ds, /178238359_ds.
 
 3.2.2 Calculate z scores in each of the tissue in all data sets "aba_zcores.R".
 
