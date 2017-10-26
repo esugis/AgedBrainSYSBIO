@@ -1,7 +1,7 @@
 # This script processes inteacrtions from curated datasets related to Alzheimer's disease from IntAct with mi score >0.45
 
 # Create the folder where current results will be written
-resdir<-paste("~/absb/results","intact",sep="/")
+resdir<-paste("~/AgedBrainSYSBIO/results,"intact",sep="/")
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -9,7 +9,7 @@ setwd(resdir)
 
 # Read in text file of all interactions with miscore >0.45 downloaded from IntAct and save them as RData
 # Please indicate the path to the downloaded data
-alz_intact=read.delim("~/AgedBrain/ppi2_data/intact/alzheimers_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
+alz_intact=read.delim("~/AgedBrainSYSBIO/data/intact/alzheimers_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
 save(alz_intact, file = "alz_intact.RData")
 
 # Get the column names
@@ -17,14 +17,14 @@ colnames(alz_intact)
 
 # Select only interactions related to human
 alz_intact <- alz_intact[alz_intact$Taxid.interactor.A%in%"taxid:9606(human)|taxid:9606(Homo sapiens)",]
-dim(alz_intact) #627  15    
+dim(alz_intact) 
 alz_intact <- alz_intact[alz_intact$Taxid.interactor.B%in%"taxid:9606(human)|taxid:9606(Homo sapiens)",]
-dim(alz_intact) #585  15
+dim(alz_intact) 
 
 # Filter out interactions with the scores < 0.45
 alz_intact$Confidence.value.s. <- as.numeric(sapply(strsplit(alz_intact$Confidence.value.s., split = "miscore:"),'[',2))
 alz_intact <- alz_intact[alz_intact$Confidence.value.s. >= 0.45,]
-dim(alz_intact[alz_intact$Confidence.value.s.>= 0.45,])#262
+dim(alz_intact[alz_intact$Confidence.value.s.>= 0.45,])
 
 # Convert interactors' names to ensg
 # Get interactors' names
@@ -39,13 +39,13 @@ B_ID <- sapply(strsplit(B,split = ":"),'[',2)
 AB <- unique(c(A_ID,B_ID))
 
 # Length of the interactors
-length(AB) #86
+length(AB)
 
 # Convert the names to ENSG ids
 library(gProfileR)
 AB2ensg <- gconvert(AB)
 AB2ensg <- AB2ensg[!duplicated(AB2ensg), ]
-dim(AB2ensg) #74    2
+dim(AB2ensg)
 head(AB2ensg)
 
 # Protein Complex Interaction(PCI) part of IntAct dataset
@@ -73,7 +73,7 @@ alz_intact_pci <- unique(merge(alz_intact_pci_a, alz_intact_pci_b, by.row = T, a
 # Convert protein names(where present) to ensg
 # Check the dimention
 dim(merge(alz_intact_pci, AB2ensg, by.x = "A", by.y = ".id", all.x = T))
-# 0 4
+
 # Merge for the first interactor
 alz_intact_pci_A <- merge(alz_intact_pci, AB2ensg, by.x = "A", by.y = ".id", all.x = T)
 
