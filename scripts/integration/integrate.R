@@ -1,7 +1,11 @@
 # This script combines all indiviadual interaction datasets into one and removes duplicated interaction of one type
 
-# Set working directory
-setwd("~/absb/results/integration/")
+# Create the folder where current results will be written
+resdir<-paste("~/AgedBrainSYSBIO/results","integration",sep="/")
+dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
+
+# Set created directory as working dirrectory
+setwd(resdir)
 
 # Libraries
 library(gProfileR)
@@ -9,22 +13,22 @@ library(gProfileR)
 # Load individual interaction datasets
 
 # PPIs associated with brain ageing (PBA)
-load(file="~/absb/results/pba/pba_int.RData")
+load(file="~/AgedBrainSYSBIO/results/pba/pba_int.RData")
 
 # Combined epistatic interactions ADNI ventrical volume, ADNI cognitive traits, TGEN, HBTRC
-load(file="~/absb/results/epistasis/epistasis_all_int.RData")
+load(file="~/AgedBrainSYSBIO/results/epistasis/epistasis_all_int.RData")
 
 # Intact hyman PPIs with MIscore >=0.45
-load(file="~/absb/results/intact/intact_int.RData")
+load(file="~/AgedBrainSYSBIO/results/intact/intact_int.RData")
 
 # IntAct Alzheimer's related manually curated PPI dataset with MIscore >=0.45
-load(file="~/absb/results/intact/alz_intact_int.RData")
+load(file="~/AgedBrainSYSBIO/results/intact/alz_intact_int.RData")
 
 # IntAct Synapse related automatically curated PPI dataset with MIscore >=0.45
-load(file="~/absb/results/intact/syn_intact_int.RData")
+load(file="~/AgedBrainSYSBIO/results/intact/syn_intact_int.RData")
 
 # Co-expression dataset with removed self-loops RRA score <= 0.0001 
-load(file="~/absb/results/adn/integration/adn_coexp_int.RData")
+load(file="~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.RData")
 
 # Convert factors to characters
 

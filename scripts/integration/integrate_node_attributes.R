@@ -1,17 +1,21 @@
 # This script assembles the nodes attribute file from GWAS, Allen Brain atlas expression, 
 # and  adds biotype of all the genes(gwas, allen brain atlas, IntAct, pba, epistasis, co-expression)
 
-# Set working directory
-setwd("~/absb/results/integration/")
+# Create the folder where current results will be written
+resdir<-paste("~/AgedBrainSYSBIO/results","integration",sep="/")
+dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
+
+# Set created directory as working dirrectory
+setwd(resdir)
 
 # Load individual  datasets of gene attributes
 
-load(file="~/absb/results/gwas/gwas_ensg.RData")
-load(file="~/absb/results/allenbrain/mtx_zscores_max_sorted.RData")
-load(file="~/absb/results/ps/ps.RData")
+load(file="~/AgedBrainSYSBIO/results/gwas/gwas_ensg.RData")
+load(file="~/AgedBrainSYSBIO/results/allenbrain/mtx_zscores_max_sorted.RData")
+load(file="~/AgedBrainSYSBIO/results/ps/ps.RData")
 
 # Load integrated interactions
-load(file="~/absb/results/integration/integrated_int.RData")
+load(file="~/AgedBrainSYSBIO/results/integration/integrated_int.RData")
 
 
 # Extract ensg ids
@@ -19,19 +23,16 @@ load(file="~/absb/results/integration/integrated_int.RData")
 # GWAS
 ensg_gwas <- unique(as.character(as.vector(gwas_ensg$ensg)))
 length(ensg_gwas)
-#[1] 2034
 
 # AllenBrain atlas data
 colnames(mtx_zscores_max_sorted)[2] <- "ensg"
 ensg_allen <- unique(as.character(as.vector(mtx_zscores_max_sorted$ensg)))
 allen <- mtx_zscores_max_sorted
 length(ensg_allen)
-#[1] 19849
 
 # Positve selection
 ensg_ps <- unique(as.character(as.vector(ps$ensg)))
 length(ensg_ps)
-# 22
 
 # Integrated interactions
 int_ensgs <- integrated_int
@@ -39,12 +40,11 @@ ensg_int <- unique(as.character(c(int_ensgs[,1], int_ensgs[,2])))
 
 # Size
 length(ensg_int)
-#37567
 
 # Combine all ensg ids
 
 ensg <- unique(c(ensg_int,ensg_ps, ensg_allen, ensg_gwas))
-length(ensg) #37567
+length(ensg) 
 
 # Get gene names and biotype
 # Biomart
@@ -57,7 +57,6 @@ colnames(ensg2name) <- c("ensg", "gene_name", "biotype")
 # Save converted ensg ids and corresponding name
 write.table(ensg2name, file = "ensg2name.txt", sep="\t", quote=F, row.names=F)
 save(ensg2name,file = "ensg2name.RData")
-
 
 # Merge individual attribute data together based on ensg
 
