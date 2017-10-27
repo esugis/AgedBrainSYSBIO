@@ -54,7 +54,7 @@ dim(epistasis_all_int)
 intact_int=df2string(intact_int)
 str(intact_int)
 intact_int <- intact_int[!duplicated(intact_int), ]
-size(intact_int)
+dim(intact_int)
 
 # Alzheimer's related PPIs from IntAct
 alz_intact_int=df2string(alz_intact_int)
