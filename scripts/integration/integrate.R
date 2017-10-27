@@ -39,40 +39,40 @@ df[,3]<-as.numeric(df[,3])
 return (df)}
 
 # PBA
-pba_int <- df2string2(pba_int)
+pba_int <- df2string(pba_int)
 # Structure
 str(pba_int)
 #Size
-dim(pba_int) # 2313    5  
+dim(pba_int)  
 
 # Epistatic interactions
 epistasis_all_int <- df2string(epistasis_all_int)
 str(epistasis_all_int)
-dim(epistasis_all_int) # 47076     5
+dim(epistasis_all_int) 
 
 # PPIs from IntAct
 intact_int=df2string(intact_int)
 str(intact_int)
 intact_int <- intact_int[!duplicated(intact_int), ]
-size(intact_int)# 58118     5
+size(intact_int)
 
 # Alzheimer's related PPIs from IntAct
 alz_intact_int=df2string(alz_intact_int)
 str(alz_intact_int)
 alz_intact_int <- alz_intact_int[!duplicated(alz_intact_int), ]
-dim(alz_intact_int) #102   5
+dim(alz_intact_int)
 
 # Synaptic interactions from IntAct
 syn_intact_int=df2string(syn_intact_int)
 str(syn_intact_int)
 syn_intact_int <- syn_intact_int[!duplicated(syn_intact_int), ]
-dim(syn_intact_int) #468   5
+dim(syn_intact_int)
 
 # Co-expression in Alzheimer's and normal brain
 adn_coexp_int=df2string(adn_coexp_int)
 str(adn_coexp_int)
 adn_coexp_int <- adn_coexp_int[!duplicated(adn_coexp_int), ]
-dim(adn_coexp_int) #26633     5
+dim(adn_coexp_int)
 
 # Create one DF from separate datasets
 integrated_int <- rbind(pba_int, epistasis_all_int, intact_int, alz_intact_int,syn_intact_int,adn_coexp_int)
@@ -84,5 +84,5 @@ write.table(integrated_int, file = "integrated_int.txt", sep="\t", quote=F, row.
 
 
 # Size of integrated dataset
-dim(integrated_int) # 134382 5
+dim(integrated_int)
 
