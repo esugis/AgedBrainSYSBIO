@@ -99,7 +99,7 @@ alz_intact_int_pci <- alz_intact_pci_AB[, c(4,5,3)]
 colnames(alz_intact_int_pci) <- c("ensg1", "ensg2", "score")
 alz_intact_int_pci <- cbind(alz_intact_int_pci, interaction_type = "PCI")
 alz_intact_int_pci <- cbind(alz_intact_int_pci, data_source = "ADIA") # source name of the interacions in homo sapiens with miscore >0.45 IntAct
-dim(alz_intact_int_pci) # 0 
+dim(alz_intact_int_pci)  
 
 #Save the part of the integrated dataset from Alzheimer's IntAct pci for human
 save(alz_intact_int_pci, file = "alz_intact_int_pci.RData")
@@ -107,7 +107,7 @@ write.table(alz_intact_int_pci, file = "alz_intact_int_pci.txt", sep = "\t", quo
 
 ### Protein-protein interaction(PPI) part of IntAct dataset
 # Select columns "X.ID.s..interactor.A",  "ID.s..interactor.B"  "Confidence.value.s." from alz_intact
-dim(alz_intact) #262   15    
+dim(alz_intact)   
 alz_intact_ABVAL <- alz_intact[, c(1,2,15)]
 str(alz_intact_ABVAL)
 alz_intact_ABVAL[,1] <- as.character(alz_intact_ABVAL[,1])
@@ -139,8 +139,8 @@ alz_intact_int_ppi <- alz_intact_ppi_AB[, c(4,5,3)]
 # Rename the columns
 colnames(alz_intact_int_ppi) <- c("ensg1", "ensg2", "score")
 alz_intact_int_ppi <- cbind(alz_intact_int_ppi, interaction_type = "PPI")
-alz_intact_int_ppi <- cbind(alz_intact_int_ppi, data_source = "IDIA") # source name of the interacions in homo sapiens with miscore >0.45 alz_intact 
-dim(alz_intact_int_ppi) #192    5
+alz_intact_int_ppi <- cbind(alz_intact_int_ppi, data_source = "ADIA") # source name of the interacions in homo sapiens with miscore >0.45 alz_intact 
+dim(alz_intact_int_ppi) 
 
 #Save the part of the integrated dataset from alz_intact ppi for human 
 save(alz_intact_int_ppi, file = "alz_intact_int_ppi.RData")
@@ -151,7 +151,7 @@ write.table(alz_intact_int_ppi, file = "alz_intact_int_ppi.txt", sep = "\t", quo
 
 # Merge converted PPI and PCI part of alz_intact
 alz_intact_int <- rbind(alz_intact_int_ppi, alz_intact_int_pci)
-dim(alz_intact_int) #192 5
+dim(alz_intact_int) 
 
 #Save the part of the integrated dataset from alz_intact PPI and PCI for human
 save(alz_intact_int, file = "alz_intact_int.RData")
