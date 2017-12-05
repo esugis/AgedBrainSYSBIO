@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 =======
+
 results/
 >>>>>>> 57f6cb2aa68a7aae5236c9b8087d72ef10d78040
 absb/results/adn/alzcoexp_int_ud.RData
@@ -36,3 +37,5 @@ absb/results/pba/pba_int.RData
 absb/results/pba/pba_int.txt
 absb/results/pba/pba_ppi.hs.p1p2.RData
 absb/results/pba/pba_ppi_original.RData
+data/
+results/
