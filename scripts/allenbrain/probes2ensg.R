@@ -1,15 +1,15 @@
 # Convert the probe names to ensg.
 
 # Set created directory as working dirrectory
-setwd("~/AgedBrainSYSBIO/results/allenbrain/")
+setwd("~/absb/results/allenbrain/")
 
 # Used liraries
 library(reshape2)
 library(gProfileR)
 
 # Ontologies and probe annotations are the same for 4 microarray data sets, so read files from one as below
-onto <- read.csv(file = "~/AgedBrainSYSBIO/data/allenbrain/178236545_ds/Ontology.csv")
-probes <- read.csv("~/AgedBrainSYSBIO/data/allenbrain/1178236545_ds/Probes.csv")
+onto <- read.csv(file = "~/absb/data/allenbrain/178236545_ds/Ontology.csv")
+probes <- read.csv("~/absb/data/allenbrain/1178236545_ds/Probes.csv")
 
 # Keep probe_id and gene_symbol
 p <- probes[,c(1,4)]
@@ -52,7 +52,7 @@ p2ensg_orig <- merge(p, p2ensg, by.x = "gene_symbol", by.y = ".id", all = F)
 p2ensg_orig <- p2ensg_orig[!duplicated(p2ensg_orig),]
 
 # Load z-score matrix (cols-tissues, rows-probe ids)
-load(file = "~/AgedBrainSYSBIO/results/allenbrain/tissues_zscores_mtx.RData")
+load(file = "~/absb/results/allenbrain/tissues_zscores_mtx.RData")
 
 # Add ENSG ids to tissues_zscores_mtx
 tissues_zscores_mtx <- cbind(probe_id = row.names(tissues_zscores_mtx),tissues_zscores_mtx)

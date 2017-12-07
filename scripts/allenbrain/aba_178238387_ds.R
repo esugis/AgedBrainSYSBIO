@@ -1,9 +1,8 @@
-
-# This script combines expression data with tissue annotations in 178238359 data set
+# This script combines expression data with tissue annotations in 178238387 data set
 # Processed data is a data frame with columns probe_id, sample_num, value, structure_id
 
 # Create the folder where current results will be written
-resdir <- "~/absb/results/allenbrain/178238359_ds"
+resdir <- "~/absb/results/allenbrain/178238387_ds"
 dir.create(file.path(resdir), showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -12,19 +11,19 @@ setwd(resdir)
 # Used librarries
 library(reshape)
 
-# Read the expression from MicroarrayExpression.csv  Ontology.csv  PACall.csv  Probes.csv  Readme.txt  SampleAnnot.csv
-maexp <- read.csv(file = "~/absb/data/allenbrain/178238359_ds/MicroarrayExpression.csv", header = F)
+# Read the expression from MicroarrayExpression.csv  Ontology.csv  PACall.csv  Probes.csv  Readme.txt  SampleAnnot.csv 
+maexp <- read.csv(file = "~/absb/data/allenbrain/178238387_ds/MicroarrayExpression.csv", header = F)
 dim(maexp)
 
 # Read ontology
-onto <- read.csv(file = "/absb/data/allenbrain/178238359_ds/Ontology.csv")
+onto <- read.csv(file = "~/absb/data/allenbrain/178238387_ds/Ontology.csv")
 
 # Read in probes names
-probes <- read.csv("/absb/data/allenbrain/178238359_ds/Probes.csv")
+probes <- read.csv("~/absb/data/allenbrain/178238387_ds/Probes.csv")
 dim(probes)
 
 # Read in sample annotations
-sampleann <- read.csv("/absb/data/allenbrain/178238359_ds/SampleAnnot.csv")
+sampleann <- read.csv("~/absb/data/allenbrain/178238387_ds/SampleAnnot.csv")
 dim(sampleann)
 rownames(maexp) <- maexp[,1]
 maexp <- maexp[,-1]
@@ -49,7 +48,7 @@ maexp.probes <- maexp.probes[,c(1,2,3,4)]
 head(maexp.probes)
 
 # Save the preprocessed data
-save(maexp.probes,file = "maexp.probes_178238359_ds.RData")
-write.table(maexp.probes, file = "maexp.probes_178238359_ds.txt", sep = "\t", quote = F, row.names = F)
+save(maexp.probes,file = "maexp.probes_178238387_ds.RData")
+write.table(maexp.probes, file = "maexp.probes_178238387_ds.txt", sep = "\t", quote = F, row.names = F)
 
 

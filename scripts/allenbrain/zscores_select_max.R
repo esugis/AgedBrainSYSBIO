@@ -1,7 +1,7 @@
 # Script selects maximum z-scores for probes corresponding to the same Ensembl gene name
 
 # Set working dirrectory
-setwd("~/AgedBrainSYSBIO/results/allenbrain/")
+setwd("~/absb/results/allenbrain/")
 
 # Load z-score matrix
 load(file = "tissues_zscores_mtx_ensg.RData")
@@ -23,7 +23,7 @@ write.table(mtx_zscores_max, file = "mtx_zscores_max.txt", sep = "\t",quote = F,
 dim(mtx_zscores_max)
 
 # Add tissue short names as colnames.
-onto <- read.csv(file = "~/AgedBrainSYSBIO/data/allenbrain/Ontology.csv")
+onto <- read.csv(file = "~/absb/data/allenbrain/Ontology.csv")
 t_names <- colnames(mtx_zscores_max)
 
 # Take only colnames corresponding to  tissue names

@@ -1,17 +1,17 @@
 # This script assembles matrix of z-scores for all probes in the datasets from individual results for each tissue  
 
 # Set working directory
-setwd("~/AgedBrainSYSBIO/results/allenbrain/")
+setwd("~/absb/results/allenbrain/")
 
 # Used libraries
 library(reshape2)
 library(foreach)
 
 # Path to the results saved in RData format for individual tissues
-pathRdata <- "~/AgedBrainSYSBIO/results/allenbrain/tissues_rdata/"
+pathRdata <- "~/absb/results/allenbrain/tissues_rdata/"
 
 # Load the list of tissues
-load(file = "~/AgedBrainSYSBIO/results/allenbrain/all_tissues.RData" )
+load(file = "~/absb/results/allenbrain/all_tissues.RData" )
 
 # Combine z-scores in individual tissues for all probes in the form of one matrix
 tissues_z <- foreach(i = 1:length(tissues_all), .combine = rbind)%do%{

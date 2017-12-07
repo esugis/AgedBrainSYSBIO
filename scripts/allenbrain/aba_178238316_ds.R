@@ -2,7 +2,7 @@
 # Processed data is a data frame with columns probe_id, sample_num, value, structure_id
 
 # Create the folder where current results will be written
-resdir <- "~/AgedBrainSYSBIO/results/allenbrain/178238316_ds"
+resdir <- "~/absb/results/allenbrain/178238316_ds"
 dir.create(file.path(resdir), showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -12,18 +12,18 @@ setwd(resdir)
 library(reshape)
 
 # Read the expression from MicroarrayExpression.csv  Ontology.csv  PACall.csv  Probes.csv  Readme.txt  SampleAnnot.csv
-maexp <- read.csv(file = "~/AgedBrainSYSBIO/data/allenbrain/178238316_ds/MicroarrayExpression.csv", header = F)
+maexp <- read.csv(file = "~/absb/data/allenbrain/178238316_ds/MicroarrayExpression.csv", header = F)
 dim(maexp)
 
 # Read ontology
-onto <- read.csv(file = "~/AgedBrainSYSBIO/data/allenbrain/178238316_ds/Ontology.csv")
+onto <- read.csv(file = "~/absb/data/allenbrain/178238316_ds/Ontology.csv")
 
 # Read in probes names
-probes <- read.csv("~/AgedBrainSYSBIO/data/allenbrain/178238316_ds/Probes.csv")
+probes <- read.csv("~/absb/data/allenbrain/178238316_ds/Probes.csv")
 dim(probes)
 
 # Read in sample annotations
-sampleann <- read.csv("~/AgedBrainSYSBIO/data/allenbrain/178238316_ds/SampleAnnot.csv")
+sampleann <- read.csv("~/absb/data/allenbrain/178238316_ds/SampleAnnot.csv")
 dim(sampleann)
 rownames(maexp) <- maexp[,1]
 maexp <- maexp[,-1]
