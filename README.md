@@ -13,7 +13,9 @@ This file contains information about the structure of the files and some useful 
 
 ## CLONING REPOSITORY
 To clone repository to your local machine use the following command:  
+```
 git clone https://github.com/esugis/AgedBrainSYSBIO.git  
+```
 By default the project will be cloned to the folder "AgedBrainSYSBIO".  
 The following project structure will be created:   
 AgedBrainSYSBIO  
@@ -73,9 +75,9 @@ AgedBrainSYSBIO
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ps  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── positive_selection.R  
 You can also clone the project to the folder of your choice as following:  
-
+```
 git clone https://github.com/esugis/AgedBrainSYSBIO.git <DestinationDirectory>  
-
+```
 ## STRUCTURE
 
 The following projects is organised in the following structure that you can use in your analysis:
