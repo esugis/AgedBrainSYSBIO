@@ -1,7 +1,7 @@
 # This script processes dataset of protein-protein inteacrtions related to brain ageing (PBA) 
 
 ## Create the folder where current results will be written
-resdir <- paste("~/AgedBrainSYSBIO/results", "pba", sep = "/")
+resdir <- paste("~/absb/results", "pba", sep = "/")
 dir.create(file.path(resdir), showWarnings  =  FALSE,  recursive  =  TRUE)
 
 # Set created directory as working dirrectory
@@ -10,7 +10,7 @@ setwd(resdir)
 # Read in text file in xml format and save the interactions as RData
 # Please indicate the path to the downloaded data
 library(XML)
-hybxml <- xmlParse("~/AgedBrainSYSBIO/data/pba/agedbrain_psimi25_data.xml")
+hybxml <- xmlParse("~/absb/data/pba/agedbrain_psimi25_data.xml")
 
 # Convert xml to list
 xml_data <- xmlToList(hybxml)
@@ -184,6 +184,27 @@ colnames(pba_ppi.hs_int)[c(1,2,3)] <- c("ensg1","ensg2","score")
 pba_int<- pba_ppi.hs_int
 # Remove duplicates
 pba_int <- pba_int[!duplicated(pba_int),]
+
+
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# PBA
+pba_int <- df2string(pba_int)
+# Structure
+str(pba_int)
+
+# Initial size
+dim(pba_int) 
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
+pba_int <- pba_int[!duplicated(data.frame(t(apply(pba_int[1:2], 1, sort)), pba_int$score)),]
+# New size
+dim(pba_int)
 
 # Save the part of the integrated dataset related to interactions in HS.
 save(pba_int, file = "pba_int.RData")

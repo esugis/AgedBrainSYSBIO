@@ -9,4 +9,6 @@ library(reshape2)
 
 install.packages("foreach")
 library(foreach)
-q
+
+install.packages("XML")
+library(XML)

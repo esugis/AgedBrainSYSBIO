@@ -92,7 +92,7 @@ save(tissues_all,file = "all_tissues.RData" )
 tissues_z <- foreach(i = 1:length(tissues_all), .combine = rbind)%do%{
 
 # Subset one tissue
-tissue <- tissues[i]
+tissue <- tissues_all[i]
 print("current tissue")
 print(tissue)
 

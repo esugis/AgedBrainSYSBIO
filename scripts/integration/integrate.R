@@ -39,18 +39,18 @@ df[,3]<-as.numeric(df[,3])
 return (df)}
 
 # PBA
-pba_int <- df2string(pba_int)
+#pba_int <- df2string(pba_int)
 # Structure
-str(pba_int)
+#str(pba_int)
 
-# Initial size
-dim(pba_int) 
+# Initial size#
+#dim(pba_int) 
 
 # Remove the duplicated undirrescted edges with the same score.
 # For example ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
-pba_int <- pba_int[!duplicated(data.frame(t(apply(pba_int[1:2], 1, sort)), pba_int$score)),]
+#pba_int <- pba_int[!duplicated(data.frame(t(apply(pba_int[1:2], 1, sort)), pba_int$score)),]
 # New size
-dim(pba_int)
+#dim(pba_int)
 
 
 # Epistatic interactions
