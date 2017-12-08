@@ -15,12 +15,11 @@ This file contains information about the structure of the files and some useful 
 To clone repository to your local machine use the following command:  
 git clone https://github.com/esugis/AgedBrainSYSBIO.git  
 By default the project will be cloned to the folder "AgedBrainSYSBIO".  
-The following project structure will be created:  
+The following project structure will be created:   
 AgedBrainSYSBIO  
-AgedBrainSYSBIO  
-              |── README.md  
+							|── README.md  
               |── data  
-              │   |── adn  
+                  |── adn  
               │   |── allenbrain  
               │   |── epistasis  
               │   |── gwas  
