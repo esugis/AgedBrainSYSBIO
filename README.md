@@ -84,9 +84,9 @@ git clone https://github.com/esugis/AgedBrainSYSBIO.git <DestinationDirectory>
 The following projects is organised in the following structure that you can use in your analysis:
 The main catalogue of the project is ~/AgedBrainSYSBIO (where ~ stands for your home dirrectory).
 Project is divided into 3 major parts:
- ~/AgedBrainSYSBIO/data  a place to store downloaded datasets
- ~/AgedBrainSYSBIO/scripts a place to store analysis scripts
- ~/AgedBrainSYSBIO/results a place to store the results
+ - **data**  a place to store downloaded datasets  
+ - **scripts** a place to store analysis scripts  
+ - **results** a place to store the results  
 
 ## DATA
 
