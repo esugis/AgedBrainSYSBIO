@@ -92,7 +92,13 @@ Project is divided into 3 major parts:
 
 Data is stored in the folder ~/AgedBrainSYSBIO/**data**  
 Folder **data** contains sub-folders for individual data types used in the analysis.  
-If you follow the structure of the project , please use the folders to upload the corresponding data sets.  
+For automatic data download run data_downloader.sh script in your terminal:  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── data_downloader.sh 
+
+```
+cd AgedBrainSYSBIO
+./data_downloader.sh
+```
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── data    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **adn** *is for microarrays in .nc format*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **allenbrain** *is for microarray datasets downloaded from Allen brain atlas*   
