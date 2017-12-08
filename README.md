@@ -81,25 +81,26 @@ git clone https://github.com/esugis/AgedBrainSYSBIO.git <DestinationDirectory>
 ```
 ## STRUCTURE
 
-The following projects is organised in the following structure that you can use in your analysis:
-The main catalogue of the project is ~/AgedBrainSYSBIO (where ~ stands for your home dirrectory).
-Project is divided into 3 major parts:
+The main default catalogue of the project is ~/AgedBrainSYSBIO (where ~ stands for your home dirrectory).  
+If you have cloned the repository into other directory, then project route folder is ~/DestinationDirectory.    
+Project is divided into 3 major parts:  
  - **data**  a place to store downloaded datasets  
  - **scripts** a place to store analysis scripts  
  - **results** a place to store the results  
 
 ## DATA
 
-Data is stored in the folder ~/AgedBrainSYSBIO/data
-Folder ~/absb/data contains sub-folders for individual data types used in the analysis.
-If you follow the structure of the project , please use the folders to upload the corresponding data sets.
- ~/AgedBrainSYSBIO/data/adn is for microarrays in .nc format
- ~/AgedBrainSYSBIO/data/epistasis is for epistatic datasets
- ~/AgedBrainSYSBIO/data/pba is for PPI dataset related to brain ageing
- ~/AgedBrainSYSBIO/data/intact is for PPI datasets downloaded from IntAct database
- ~/AgedBrainSYSBIO/data/gwas is for GWAS dataset
- ~/AgedBrainSYSBIO/data/allenbrain is for microarray datasets downloaded from Allen brain atlas
- ~/AgedBrainSYSBIO/data/ps is for positive selection data set  
+Data is stored in the folder ~/AgedBrainSYSBIO/**data**  
+Folder **data** contains sub-folders for individual data types used in the analysis.  
+If you follow the structure of the project , please use the folders to upload the corresponding data sets.  
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── data    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **adn** *is for microarrays in .nc format*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **allenbrain** *is for microarray datasets downloaded from Allen brain atlas*   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **epistasis**  *is for epistatic datasets*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **gwas** *is for GWAS dataset*    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **intact** *is for PPI datasets downloaded from IntAct database*    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **pba**  *is for PPI dataset related to brain ageing*  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── **ps** *is for positive selection data set*  
 
 ## SCRIPTS
 
