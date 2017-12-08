@@ -17,62 +17,62 @@ git clone https://github.com/esugis/AgedBrainSYSBIO.git
 By default the project will be cloned to the folder "AgedBrainSYSBIO".  
 The following project structure will be created:  
 AgedBrainSYSBIO  
-              ├── README.md  
-              ├── data  
-              │   ├── adn  
-              │   ├── allenbrain  
-              │   ├── epistasis  
-              │   ├── gwas  
-              │   ├── intact  
-              │   ├── pba  
-              │   └── ps  
-              ├── data_downloader.sh  
+AgedBrainSYSBIO  
+              |── README.md  
+              |── data  
+              │   |── adn  
+              │   |── allenbrain  
+              │   |── epistasis  
+              │   |── gwas  
+              │   |── intact  
+              │   |── pba  
+              │   |── ps  
+              |── data_downloader.sh  
               └── scripts  
-                  ├── adn  
-                  │   ├── E_GEOD_18309.R  
-                  │   ├── E_GEOD_28146.R  
-                  │   ├── E_GEOD_29652.R  
-                  │   ├── E_GEOD_4757.R  
-                  │   ├── E_GEOD_5281.R  
-                  │   ├── E_MEXP_2280.R  
-                  │   ├── RRA_probesets.R  
-                  │   ├── affy2ensg.R  
-                  │   ├── coexp2undirrected_selfloops_rm.R  
-                  │   ├── coexp_int.R  
-                  │   ├── final_adn.R  
+                  |── adn  
+                  │   |── E_GEOD_18309.R  
+                  │   |── E_GEOD_28146.R  
+                  │   |── E_GEOD_29652.R  
+                  │   |── E_GEOD_4757.R  
+                  │   |── E_GEOD_5281.R  
+                  │   |── E_MEXP_2280.R  
+                  │   |── RRA_probesets.R  
+                  │   |── affy2ensg.R  
+                  │   |── coexp2undirrected_selfloops_rm.R  
+                  │   |── coexp_int.R  
+                  │   |── final_adn.R  
                   │   └── tmp_coexp_int.R.save  
-                  ├── allenbrain  
-                  │   ├── aba_178236545_ds.R  
-                  │   ├── aba_178238266_ds.R  
-                  │   ├── aba_178238316_ds.R  
-                  │   ├── aba_178238359_ds.R  
-                  │   ├── aba_178238373_ds.R  
-                  │   ├── aba_178238387_ds.R  
-                  │   ├── aba_zcores.R  
-                  │   ├── aba_zcores_assemble.R  
-                  │   ├── expressed_regions.R  
-                  │   ├── probes2ensg.R  
+                  |── allenbrain  
+                  │   |── aba_178236545_ds.R  
+                  │   |── aba_178238266_ds.R  
+                  │   |── aba_178238316_ds.R  
+                  │   |── aba_178238359_ds.R  
+                  │   |── aba_178238373_ds.R  
+                  │   |── aba_178238387_ds.R  
+                  │   |── aba_zcores.R  
+                  │   |── aba_zcores_assemble.R  
+                  │   |── expressed_regions.R  
+                  │   |── probes2ensg.R  
                   │   └── zscores_select_max.R  
-                  ├── epistasis  
-                  │   ├── combine.R  
-                  │   ├── epi_adni.R  
-                  │   ├── epi_adni_cog.R  
-                  │   ├── epi_hbtrc.R  
+                  |── epistasis  
+                  │   |── combine.R  
+                  │   |── epi_adni.R  
+                  │   |── epi_adni_cog.R  
+                  │   |── epi_hbtrc.R  
                   │   └── epi_tgen.R  
-                  ├── gwas  
+                  |── gwas  
                   │   └── gwas2ensg.R  
-                  ├── intact  
-                  │   ├── alz_intact.R  
-                  │   ├── intact.R  
+                  |── intact  
+                  │   |── alz_intact.R  
+                  │   |── intact.R  
                   │   └── synapse_intact.R  
-                  ├── integration  
-                  │   ├── integrate.R  
+                  |── integration  
+                  │   |── integrate.R  
                   │   └── integrate_node_attributes.R  
-                  ├── libraries.R  
-                  ├── pba  
+                  |── libraries.R  
+                  |── pba  
                   │   └── pba_int.R  
                   └── ps  
-                      └── positive_selection.R  
   
 You can also clone the project to the folder of your choice as following:  
 
