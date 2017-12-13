@@ -9,7 +9,7 @@ library(gProfileR)
 
 # Ontologies and probe annotations are the same for 4 microarray data sets, so read files from one as below
 onto <- read.csv(file = "~/absb/data/allenbrain/178236545_ds/Ontology.csv")
-probes <- read.csv("~/absb/data/allenbrain/1178236545_ds/Probes.csv")
+probes <- read.csv("~/absb/data/allenbrain/178236545_ds/Probes.csv")
 
 # Keep probe_id and gene_symbol
 p <- probes[,c(1,4)]

@@ -12,19 +12,29 @@ pathRdata <- "~/absb/results/allenbrain/tissues_rdata/"
 
 # Load the list of tissues
 load(file = "~/absb/results/allenbrain/all_tissues.RData" )
-
+tissues_all <-sort(tissues_all)
 # Combine z-scores in individual tissues for all probes in the form of one matrix
+
 tissues_z <- foreach(i = 1:length(tissues_all), .combine = rbind)%do%{
 tissue=tissues_all[i]
 print("current tissue")
 print(tissue)
+print("current iteration")
+print(i)
 # Create path to the file
 filedata <- sprintf("%s.RData",tissue);
 pathdata <- file.path(pathRdata, filedata);
+print("path to file")
+print(pathdata)
 load(file = pathdata)
 # Load onetissue_av
+tst<-head(onetissue_av)
+print("head")
+print(tst)
+onetissue_av <-onetissue_av[,1:4]
 return(onetissue_av)
 }
+
 save(tissues_z, file = "tissues_z.RData")
 
 # Cast a matrix
