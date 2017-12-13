@@ -64,14 +64,14 @@ epistasis_all_int <- epistasis_all_int[!duplicated(data.frame(t(apply(epistasis_
 # New size
 dim(epistasis_all_int)
 
-# PPIs from IntAct
-intact_int=df2string(intact_int)
-str(intact_int)
-intact_int <- intact_int[!duplicated(intact_int), ]
-dim(intact_int)
-intact_int <- intact_int[!duplicated(data.frame(t(apply(intact_int[1:2], 1, sort)), intact_int$score)),]
-# New size
-dim(intact_int) 
+## PPIs from IntAct
+#intact_int=df2string(intact_int)
+#str(intact_int)
+#intact_int <- intact_int[!duplicated(intact_int), ]
+#dim(intact_int)
+#intact_int <- intact_int[!duplicated(data.frame(t(apply(intact_int[1:2], 1, sort)), intact_int$score)),]
+## New size
+#dim(intact_int) 
 
 # Alzheimer's related PPIs from IntAct
 alz_intact_int=df2string(alz_intact_int)

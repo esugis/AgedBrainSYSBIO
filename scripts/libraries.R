@@ -10,5 +10,6 @@ library(reshape2)
 install.packages("foreach")
 library(foreach)
 
-install.packages("XML")
-library(XML)
+source("https://bioconductor.org/biocLite.R")
+biocLite("biomaRt")
+library(biomaRt)

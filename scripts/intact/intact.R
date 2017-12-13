@@ -1,7 +1,7 @@
 # This script processes inteacrtion from IntAct with mi score >0.45
 
 # Create the folder where current results will be written
-resdir<-paste("~/gedBrainSYSBIO/results","intact",sep="/")
+resdir<-paste("~/absb/results","intact",sep="/")
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -9,7 +9,7 @@ setwd(resdir)
 
 # Read in text file of all interactions with miscore >0.45 downloaded from IntAct and save them as RData
 # Please indicate the path to the downloaded data
-intact <- read.delim("~/AgedBrainSYSBIO/data/intact/intact_hs_v_4_2_6.txt", stringsAsFactors = F, sep = "\t", header=T)
+intact <- read.delim("~/absb/data/intact/intact_hs_v_4_2_6.txt", stringsAsFactors = F, sep = "\t", header=T)
 save(intact, file = "intact.RData")
 
 # Get the column names
@@ -148,9 +148,29 @@ write.table(intact_int_ppi, file = "intact_int_ppi.txt", sep = "\t", quote = F, 
 intact_int <- rbind(intact_int_ppi, intact_int_pci)
 dim(intact_int) 
 
+# Convert factors to characters
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
+# PPIs from IntAct
+intact_int=df2string(intact_int)
+str(intact_int)
+intact_int <- intact_int[!duplicated(intact_int), ]
+dim(intact_int)
+intact_int <- intact_int[!duplicated(data.frame(t(apply(intact_int[1:2], 1, sort)), intact_int$score)),]
+# New size
+dim(intact_int)# 44258     5
+
+
 #Save the part of the integrated dataset from IntAct PPI and PCI for human
 save(intact_int, file = "intact_int.RData")
 write.table(intact_int, file = "intact_int.txt", sep = "\t", quote = F, row.names = F)
+
 
 
 

@@ -1,7 +1,7 @@
 # This script maps SNP IDs from GWAS to Ensemble gene IDs
 
 # Create the folder where current results will be written
-resdir<-"~/AgedBrainSYSBIO/results/gwas/"
+resdir<-"~/absb/results/gwas/"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -11,7 +11,7 @@ setwd(resdir)
 library(biomaRt)
 library(gProfileR)
 
-gwas <- read.table(file="~/AgedBrainSYSBIO/data/gwas/IGAP_stage_1_2_combined.txt", sep="\t", header=T,stringsAsFactors = F )
+gwas <- read.table(file="~/absb/data/gwas/IGAP_stage_1_2_combined.txt", sep="\t", header=T,stringsAsFactors = F )
 dim(gwas)
 marker.name=unique(gwas$MarkerName)
 length(marker.name)
