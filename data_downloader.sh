@@ -14,7 +14,7 @@ mkdir data/gwas
 wget https://ndownloader.figshare.com/files/9919579?private_link=d2e8de1569c2c953f84f -O data/gwas/IGAP_stage_1_2_combined.txt
 
 mkdir data/pba
-wget https://ndownloader.figshare.com/files/9920467?private_link=2aec9f67eb45a362c2af -O data/pba/agedbrain_psimi25_data.xml
+wget https://ndownloader.figshare.com/files/9982702?private_link=2aec9f67eb45a362c2af -O data/pba/PBA_PPI_HS.txt
 
 mkdir data/adn
 wget https://ndownloader.figshare.com/files/8753989?private_link=e469a93aad71bba4a9b5 -O data/adn/E-GEOD-18309.nc
