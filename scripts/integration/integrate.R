@@ -73,23 +73,23 @@ dim(epistasis_all_int)
 ## New size
 #dim(intact_int) 
 
-# Alzheimer's related PPIs from IntAct
-alz_intact_int=df2string(alz_intact_int)
-str(alz_intact_int)
-alz_intact_int <- alz_intact_int[!duplicated(alz_intact_int), ]
-dim(alz_intact_int) 
-alz_intact_int <- alz_intact_int[!duplicated(data.frame(t(apply(alz_intact_int[1:2], 1, sort)), alz_intact_int$score)),]
-# New size
-dim(alz_intact_int) 
+## Alzheimer's related PPIs from IntAct
+#alz_intact_int=df2string(alz_intact_int)
+#str(alz_intact_int)
+#alz_intact_int <- alz_intact_int[!duplicated(alz_intact_int), ]
+#dim(alz_intact_int) 
+#alz_intact_int <- alz_intact_int[!duplicated(data.frame(t(apply(alz_intact_int[1:2], 1, sort)), alz_intact_int$score)),]
+## New size
+#dim(alz_intact_int) 
 
-# Synaptic interactions from IntAct
-syn_intact_int=df2string(syn_intact_int)
-str(syn_intact_int)
-syn_intact_int <- syn_intact_int[!duplicated(syn_intact_int), ]
-dim(syn_intact_int)
-syn_intact_int <- syn_intact_int[!duplicated(data.frame(t(apply(syn_intact_int[1:2], 1, sort)), syn_intact_int$score)),]
-# New size
-dim(syn_intact_int) 
+## Synaptic interactions from IntAct
+#syn_intact_int=df2string(syn_intact_int)
+#str(syn_intact_int)
+#syn_intact_int <- syn_intact_int[!duplicated(syn_intact_int), ]
+#dim(syn_intact_int)
+#syn_intact_int <- syn_intact_int[!duplicated(data.frame(t(apply(syn_intact_int[1:2], 1, sort)), syn_intact_int$score)),]
+## New size
+#dim(syn_intact_int) 
 
 # Co-expression in Alzheimer's and normal brain
 adn_coexp_int=df2string(adn_coexp_int)

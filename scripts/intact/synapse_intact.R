@@ -1,7 +1,7 @@
 # This script processes manually curated synapse realted  dataset from IntAct
 
 # Create the folder where current results will be written
-resdir<-paste("~/AgedBrainSYSBIO/results","intact",sep="/")
+resdir<-paste("~/absb/results","intact",sep="/")
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -9,7 +9,7 @@ setwd(resdir)
 
 # Read in text file of all interactions with miscore >0.45 downloaded from IntAct and save them as RData
 # Please indicate the path to the downloaded data
-syn_intact <- read.delim("~/AgedBrainSYSBIO/data/intact/synapse_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
+syn_intact <- read.delim("~/absb/data/intact/synapse_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
 save(syn_intact, file = "syn_intact.RData")
 
 # Get the column names
@@ -152,6 +152,26 @@ write.table(syn_intact_int_ppi, file = "syn_intact_int_ppi.txt", sep = "\t", quo
 # Merge converted PPI and PCI part of syn_intact
 syn_intact_int <- rbind(syn_intact_int_ppi, syn_intact_int_pci)
 dim(syn_intact_int) 
+
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
+
+# Convert factors to characters
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# Synaptic interactions from IntAct
+syn_intact_int=df2string(syn_intact_int)
+str(syn_intact_int)
+syn_intact_int <- syn_intact_int[!duplicated(syn_intact_int), ]
+dim(syn_intact_int)
+syn_intact_int <- syn_intact_int[!duplicated(data.frame(t(apply(syn_intact_int[1:2], 1, sort)), syn_intact_int$score)),]
+# New size
+dim(syn_intact_int)
 
 #Save the part of the integrated dataset from syn_intact PPI and PCI for human
 save(syn_intact_int, file = "syn_intact_int.RData")

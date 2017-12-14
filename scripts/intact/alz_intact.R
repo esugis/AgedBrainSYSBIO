@@ -1,7 +1,7 @@
 # This script processes inteacrtions from curated datasets related to Alzheimer's disease from IntAct with mi score >0.45
 
 # Create the folder where current results will be written
-resdir<-paste("~/AgedBrainSYSBIO/results,"intact",sep="/")
+resdir<-paste("~/absb/results","intact",sep="/")
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -9,7 +9,7 @@ setwd(resdir)
 
 # Read in text file of all interactions with miscore >0.45 downloaded from IntAct and save them as RData
 # Please indicate the path to the downloaded data
-alz_intact=read.delim("~/AgedBrainSYSBIO/data/intact/alzheimers_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
+alz_intact=read.delim("~/absb/data/intact/alzheimers_intact_v_4_2_6.txt", stringsAsFactors=F, sep = "\t", header=T)
 save(alz_intact, file = "alz_intact.RData")
 
 # Get the column names
@@ -152,6 +152,28 @@ write.table(alz_intact_int_ppi, file = "alz_intact_int_ppi.txt", sep = "\t", quo
 # Merge converted PPI and PCI part of alz_intact
 alz_intact_int <- rbind(alz_intact_int_ppi, alz_intact_int_pci)
 dim(alz_intact_int) 
+
+
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
+
+# Convert factors to characters
+
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# Alzheimer's related PPIs from IntAct
+alz_intact_int=df2string(alz_intact_int)
+str(alz_intact_int)
+alz_intact_int <- alz_intact_int[!duplicated(alz_intact_int), ]
+dim(alz_intact_int)
+alz_intact_int <- alz_intact_int[!duplicated(data.frame(t(apply(alz_intact_int[1:2], 1, sort)), alz_intact_int$score)),]
+# New size
+dim(alz_intact_int)
 
 #Save the part of the integrated dataset from alz_intact PPI and PCI for human
 save(alz_intact_int, file = "alz_intact_int.RData")
