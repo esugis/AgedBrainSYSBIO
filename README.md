@@ -136,7 +136,7 @@ pathtxt <- "~/AgedBrainSYSBIO/results/adn/all_probes/txt/E_GEOD_18309/"
 2.1.2 Ranking the co-expressed values for each probeset in each of the datasets. Aggregating the ranks in all the datasets.
 RRA_probesets.R
 
-2.1.3 Converting the values to ensg ids. The script also handles the cases when affymetrix probeset id was not recognised by the gconvert() function due to the presence of the unrecognised sexual symbols in the probeset name.
+2.1.3 Converting the values to ensg ids. The script also handles the cases when affymetrix probeset id was not recognised by the gconvert() function due to the presence of the unrecognised symbols in the probeset name.
 affy2ensg.R
 
 2.1.4 Assembling together calculated RRA scores for all affy probes is performed in coexp_int.R  
