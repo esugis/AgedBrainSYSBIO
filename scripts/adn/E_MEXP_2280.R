@@ -8,32 +8,31 @@
 
 
 # Used libarries
-library(stats);
 library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 library(stringr);
 library("R.utils");
-library(ncdf);
+library(ncdf4);
 
 # Open dataset in NetCDF format
 # Please indicate the path to the saved .nc file, e.g. as shown below
-E_MEXP_2280 <- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-MEXP-2280.nc");  
+E_MEXP_2280 <- nc_open("~/absb/data/adn/E-MEXP-2280.nc");  
 
 # Extract only Alzheimer and healthy saples from E_GEOD_5281
 # List of variable in E_GEOD_5281 
 names(E_MEXP_2280$var)
-get.var.ncdf(E_MEXP_2280 , "DiseaseState")
+ncvar_get(E_MEXP_2280 , "DiseaseState")
 
 # Select only Alzheimer's disease and healthy  samples
-data_E_MEXP_2280 <- get.var.ncdf(E_MEXP_2280 , "data")
-rownames(data_E_MEXP_2280) <- get.var.ncdf(E_MEXP_2280 , "DiseaseState")
-colnames(data_E_MEXP_2280) <- get.var.ncdf(E_MEXP_2280 ,"gene")
+data_E_MEXP_2280 <- ncvar_get(E_MEXP_2280 , "data")
+rownames(data_E_MEXP_2280) <- ncvar_get(E_MEXP_2280 , "DiseaseState")
+colnames(data_E_MEXP_2280) <- ncvar_get(E_MEXP_2280 ,"gene")
 data_E_MEXP_2280 <- t(data_E_MEXP_2280)
 
 #Dimention of the data
 dim(data_E_MEXP_2280)
 
 # Close NetCDF file
-close.ncdf(E_MEXP_2280)
+nc_close(E_MEXP_2280)
 
 # Rename the samples
 data_E_MEXP_2280 <- data_E_MEXP_2280[,colnames(data_E_MEXP_2280)%in%c("Alzheimer's disease", "normal")]
@@ -49,8 +48,8 @@ m<-t(data_E_MEXP_2280_filt)
 length(ds_genes <- colnames(m))
 
 # Path to the foldet where results will be saved
-pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_MEXP_2280/"
-pathtxt <- "~/AgedBrainSYSBIO/results/adn/all_probes/txt/E_MEXP_2280/"
+pathRdata <- "~/absb/results/adn/all_probes/rdata/E_MEXP_2280/"
+pathtxt <- "~/absb/results/adn/all_probes/txt/E_MEXP_2280/"
 
 # Create directories
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
@@ -82,5 +81,5 @@ foreach(i = 1:length(ds_genes)) %dopar%{
 
 # Exract the list of probesets
 E_MEXP_2280_pr <- colnames(m)
-save(E_MEXP_2280_pr, file = "~/AgedBrainSYSBIO/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
+save(E_MEXP_2280_pr, file = "~/absb/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
 

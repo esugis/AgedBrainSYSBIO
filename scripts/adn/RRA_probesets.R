@@ -10,24 +10,24 @@ pathRdata <- "~/AgedBrainSYSBIO/results/adn/all/probes/scores/rdata/"
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
 
 # Load the probesets names
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
-load(file <- "~/AgedBrainSYSBIO/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_GEOD_28146_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_GEOD_29652_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_GEOD_5281_all_probes.RData")
+load(file <- "~/absb/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
 
 # Select unique probesets
 genes <- unique(c(E_GEOD_18309_pr, E_GEOD_28146_pr, E_GEOD_29652_pr, E_GEOD_4757_pr, E_GEOD_5281_pr, E_MEXP_2280_pr))
 dim(genes)
 
 # Paths to the coexpression results in each dataset
-pathRdata_E_GEOD_18309 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_18309/"
-pathRdata_E_GEOD_28146 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_28146/"
-pathRdata_E_GEOD_29652 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_29652/"
-pathRdata_E_GEOD_4757 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_4757/"
-pathRdata_E_GEOD_5281 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_5281/"
-pathRdata_E_MEXP_2280 <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_MEXP_2280/"
+pathRdata_E_GEOD_18309 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_18309/"
+pathRdata_E_GEOD_28146 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_28146/"
+pathRdata_E_GEOD_29652 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_29652/"
+pathRdata_E_GEOD_4757 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_4757/"
+pathRdata_E_GEOD_5281 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_5281/"
+pathRdata_E_MEXP_2280 <- "~/absb/results/adn/all_probes/rdata/E_MEXP_2280/"
 
 library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 foreach(i = 1:length(genes)) %dopar%{
@@ -93,8 +93,8 @@ filename <- sprintf("%s.txt",gene);
 filedata <- sprintf("%s.RData",gene);
 
 # Path name to save the results
-pathdata_scores <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/rdata/"
-pathtxt_scores <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/txt/"
+pathdata_scores <- "~/absb/results/adn/all_probes/scores/rdata/"
+pathtxt_scores <- "~/absb/results/adn/all_probes/scores/txt/"
 pathname <- file.path(pathtxt_scores, filename);
 pathdata <- file.path(pathdata_scores, filedata);
 write.table(ar_gene, file=pathname, sep="\t", quote=F, row.names=F);

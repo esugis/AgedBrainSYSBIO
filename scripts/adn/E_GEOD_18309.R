@@ -8,31 +8,30 @@
 
 
 # Used libarries
-library(stats);
 library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 library(stringr);
 library("R.utils");
-library(ncdf);
+library(ncdf4);
 
 # Open dataset in NetCDF format
 # Please indicate the path to the saved .nc file, e.g. as shown below
-E_GEOD_18309<- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-18309.nc");
+E_GEOD_18309<- nc_open("~/absb/data/adn/E-GEOD-18309.nc");
 
 # List of variables in the dataset
 names(E_GEOD_18309$var)
-get.var.ncdf(E_GEOD_18309, "MetadataOrder")
+ncvar_get(E_GEOD_18309, "MetadataOrder")
 
 # Take only Alzheimer related samples based on the additional info in the ArrayExpress
-data_E_GEOD_18309 <- get.var.ncdf(E_GEOD_18309, "data")
-rownames(data_E_GEOD_18309) <- get.var.ncdf(E_GEOD_18309, "MetadataOrder")
-colnames(data_E_GEOD_18309) <- get.var.ncdf(E_GEOD_18309,"gene")
+data_E_GEOD_18309 <- ncvar_get(E_GEOD_18309, "data")
+rownames(data_E_GEOD_18309) <- ncvar_get(E_GEOD_18309, "MetadataOrder")
+colnames(data_E_GEOD_18309) <- ncvar_get(E_GEOD_18309,"gene")
 data_E_GEOD_18309 <- t(data_E_GEOD_18309)
 
 # Dimentions of the dataset
 dim(data_E_GEOD_18309)
 
 # Close NetCDF file
-close.ncdf(E_GEOD_18309)
+nc_close(E_GEOD_18309)
 
 # Extract and rename only Alzheimer and healthy saples   
 colnames(data_E_GEOD_18309)[1:3] <- "alz"
@@ -50,8 +49,8 @@ dim(data_E_GEOD_18309_filt)
 m <- t(data_E_GEOD_18309_filt)
 
 # Path to the foldet where results will be saved
-pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_18309/"
-pathtxt <- "~/AgedBrainSYSBIO/results/adn/all_probes/txt/E_GEOD_18309/"
+pathRdata <- "~/absb/results/adn/all_probes/rdata/E_GEOD_18309/"
+pathtxt <- "~/absb/results/adn/all_probes/txt/E_GEOD_18309/"
 
 # Create directories
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
@@ -78,11 +77,11 @@ foreach(i = 1:length(ds_genes)) %dopar%{
    pathname <- file.path(pathtxt, filename);
    pathdata <- file.path(pathRdata, filedata);
    write.table(cor1gds, file = pathname, sep = "\t", quote=F, row.names = F);
-   save(cor1gd
+   save(cor1gds,file = pathdata)
  }
 
 # Exract the list of probesets
 E_GEOD_18309_pr <- colnames(m)
-save(E_GEOD_18309_pr, file = "~/AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
+save(E_GEOD_18309_pr, file = "~/absb/results/adn/all_probes/E_GEOD_18309_all_probes.RData")
 
 

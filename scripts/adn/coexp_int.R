@@ -1,26 +1,24 @@
 # This script puts together calculated coexpr scores for all affy probes.
 
 # Create the folder where current results will be written
-resdir <- "~/AgedBrainSYSBIO/results/adn/integration/"
+resdir <- "~/absb/results/adn/integration/"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
 setwd(resdir)
 
 # Used libarries
-library(stats);
 library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 library(stringr);
 library("R.utils")
-library(ncdf);
 library(gProfileR)
 
 # Set the path to the calculated RRA scores
-pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/scores/rdata"
+pathRdata <- "~/absb/results/adn/all_probes/scores/rdata"
 
 # Load unique selected affy probes
-load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/un_sel_gsub_pr.RData")
-load(file = "~/AgedBrainSYSBIO/results/adn/all_probes/selected_affys_ensg.RData")
+load(file = "~/absb/results/adn/all_probes/un_sel_gsub_pr.RData")
+load(file = "~/absb/results/adn/all_probes/selected_affys_ensg.RData")
 
 # un_sel_gsub_pr contains probe names with changed"-", but "/" symbols are stil present. 
 #The files in the dirrectory have different pattern.

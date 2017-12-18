@@ -5,12 +5,12 @@
 # We select one of 2 pars because RRA results of AB and BA are not symmetrical.
 # Adds missing columns interaction_type="coexpression" and data_source="ADN"
 # The filnal coexpression part of the integrated dataset is stored in 
-# file="~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.RData"
-# and file="~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.txt" 
+# file="~/absb/results/adn/integration/adn_coexp_int.RData"
+# and file="~/absb/results/adn/integration/adn_coexp_int.txt" 
 
 # Load the dataset of interest
 # Load ds with cut off 0.00001
-load(file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_pairs_int.RData")
+load(file = "~/absb/results/adn/integration/adn_coexp_pairs_int.RData")
 dim(adn_coexp_pairs_int)
 alzcoexp_int <- adn_coexp_pairs_int
 
@@ -33,7 +33,7 @@ dim(alzcoexp_int)
 
 head(alzcoexp_int)
 adn_coexp_int <- alzcoexp_int
-save(adn_coexp_int, file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.RData")
-write.table(adn_coexp_int,file = "~/AgedBrainSYSBIO/results/adn/integration/adn_coexp_int.txt", quote = F, sep = "\t",row.names = F)
+save(adn_coexp_int, file = "~/absb/results/adn/integration/adn_coexp_int.RData")
+write.table(adn_coexp_int,file = "~/absb/results/adn/integration/adn_coexp_int.txt", quote = F, sep = "\t",row.names = F)
 
 

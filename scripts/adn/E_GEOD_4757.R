@@ -8,34 +8,32 @@
 
 
 # Used libarries
-library(stats);
 library(foreach); library(doMC); cores=10 ; registerDoMC(cores);
 library(stringr);
 library("R.utils");
-library(ncdf);
+library(ncdf4);
 
 # Open dataset in NetCDF format
 # Please indicate the path to the saved .nc file, e.g. as shown below
-E_GEOD_4757 <- open.ncdf("~/AgedBrainSYSBIO/data/adn/E-GEOD-4757.nc");
-
+E_GEOD_4757 <- nc_open("~/absb/data/adn/E-GEOD-4757.nc");
 
 # Extract only Alzheimer and healthy saples from E_GEOD_4757
 # List of variable in E_GEOD_4757
 names(E_GEOD_4757$var)
 
-get.var.ncdf(E_GEOD_4757, "Phenotype")
+ncvar_get(E_GEOD_4757, "Phenotype")
 
 # Select only Alzheimer's disease and healthy samples
-data_E_GEOD_4757 <- get.var.ncdf(E_GEOD_4757, "data")
-rownames(data_E_GEOD_4757) <- get.var.ncdf(E_GEOD_4757, "Phenotype")
-colnames(data_E_GEOD_4757) <- get.var.ncdf(E_GEOD_4757,"gene")
+data_E_GEOD_4757 <- ncvar_get(E_GEOD_4757, "data")
+rownames(data_E_GEOD_4757) <- ncvar_get(E_GEOD_4757, "Phenotype")
+colnames(data_E_GEOD_4757) <- ncvar_get(E_GEOD_4757,"gene")
 data_E_GEOD_4757 <- t(data_E_GEOD_4757)
 
 #Dimention of the data
 dim(data_E_GEOD_4757)
 
 # Close NetCDF file
-close.ncdf(E_GEOD_4757)
+nc_close(E_GEOD_4757)
 
 # Rename the samples
 colnames(data_E_GEOD_4757) <- gsub("normal","norm", colnames(data_E_GEOD_4757))
@@ -51,8 +49,8 @@ dim(data_E_GEOD_4757_filt)
 m <- t(data_E_GEOD_4757_filt)
 
 # Path to the foldet where results will be saved
-pathRdata <- "~AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_4757/"
-pathtxt <- "~AgedBrainSYSBIO/results/adn/all_probes/txt/E_GEOD_4757/"
+pathRdata <- "~/absb/results/adn/all_probes/rdata/E_GEOD_4757/"
+pathtxt <- "~/absb/results/adn/all_probes/txt/E_GEOD_4757/"
 
 # Create directories
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
@@ -85,6 +83,6 @@ foreach(i = 1:length(ds_genes)) %dopar%{
 
 # Exract the list of probesets
 E_GEOD_4757_pr <- colnames(m)
-save(E_GEOD_4757_pr, file = "~AgedBrainSYSBIO/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
+save(E_GEOD_4757_pr, file = "~/absb/results/adn/all_probes/E_GEOD_4757_all_probes.RData")
 
 

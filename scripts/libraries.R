@@ -13,3 +13,12 @@ library(foreach)
 source("https://bioconductor.org/biocLite.R")
 biocLite("biomaRt")
 library(biomaRt)
+
+install.packages("stringr")
+library(stringr)
+
+install.packages("R.utils")
+library("R.utils")
+
+install.packages("ncdf4")
+library(ncdf4)
