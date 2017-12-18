@@ -1,13 +1,11 @@
-# Script splits complex ensg1-ensg2 names and formats the interactions to ensg1/ensg2/p-value/int
-# it also converts LRG ids to ENSG ids
-
+# Script preprocesses file containing epistatic interactions in TGEN cohort.
 library(gProfileR)
 
 # Read the file
-epi <- read.table(file = "~/AgedBrainSYSBIO/data/epistasis/TGen_epistatic_gene_pairs_Braak_1e_8.tsv", header = T)
+epi <- read.table(file = "~/absb/data/epistasis/TGEN_epistasis.tsv", header = T)
 
 # Create the folder where current results will be written
-resdir <- "~/AgedBrainSYSBIO/results/epistasis/"
+resdir <- "~/absb/results/epistasis/"
 dir.create(file.path(resdir),showWarnings  =  FALSE, recursive  =  TRUE)
 
 # Data size
@@ -38,8 +36,8 @@ B <- as.character(epi_b$ENSG_B)
 LRG2ensg_tgen  <-  gconvert(B)
 
 # Save to the file in RData and txt formats 
-save(LRG2ensg_tgen, file = "LRG2ensg_tgen.RData")
-write.table(LRG2ensg_tgen, file = "LRG2ensg_tgen.txt", quote = F,sep = "\t",row.names = F)
+#save(LRG2ensg_tgen, file = "LRG2ensg_tgen.RData")
+#write.table(LRG2ensg_tgen, file = "LRG2ensg_tgen.txt", quote = F,sep = "\t",row.names = F)
 
 # Remove duplicates
 LRG2ensg_tgen <- LRG2ensg_tgen[!duplicated(LRG2ensg_tgen), ]
@@ -59,12 +57,13 @@ head(epi_tgen_lrg_fin)
  
 # Bind columns with interaction_type, data_source.
 epi_tgen_lrg_fin <- cbind(epi_tgen_lrg_fin, interaction_type = "epistasis")
+
 epi_tgen_lrg_fin <- cbind(epi_tgen_lrg_fin, data_source = "TGEN")
 colnames(epi_tgen_lrg_fin) <- c("ensg1","ensg2","score","interaction_type","data_source")
 
 # Save data
-save(epi_tgen_lrg_fin, file  =  "epi_tgen_lrg.RData")
-write.table(epi_tgen_lrg_fin,file = "epi_tgen_lrg_fin.txt",sep = "\t", quote = F, row.names = F)
+#save(epi_tgen_lrg_fin, file  =  "epi_tgen_lrg.RData")
+#write.table(epi_tgen_lrg_fin,file = "epi_tgen_lrg_fin.txt",sep = "\t", quote = F, row.names = F)
 
 # Combine with the main data frame 
 epi_cut <- epi[!row.names(epi)%in%rows_cut,]
@@ -101,27 +100,27 @@ dim(epi_tgen_2ensg)
 # Merge by ensg2
 epi_tgen_2ensg <- merge(epi_tgen_2ensg,epi_tgen_ensg22ensg, by.x = "ensg2", by.y = ".id", all = F)
 
-# Size of the dataset with old ENSG IDs(ver 74) converted to ver 87
+# Size of the dataset with old ENSG IDs(ver 74) converted to ver 90
 dim(epi_tgen_2ensg)
 
 # Size of the dataset with old ENSG IDs(ver74)
 dim(epi_tgen)
 
-# Find differences between ENSG IDs in Ensembl ver 87 and Ensembl ver 74 
-# All ENSG IDs in ver 87
-ensg_tgen_ver87<-unique(c(as.character(epi_tgen_2ensg$ensg1),as.character(epi_tgen_2ensg$ensg2)))
-length(ensg_tgen_ver87)
+# Find differences between ENSG IDs in Ensembl ver 90 and Ensembl ver 74 
+# All ENSG IDs in ver 90
+ensg_tgen_ver90<-unique(c(as.character(epi_tgen_2ensg$ensg1),as.character(epi_tgen_2ensg$ensg2)))
+length(ensg_tgen_ver90)
 
 # All ENSG IDs in ver 74
 ensg_tgen_ver74<-unique(c(as.character(epi_tgen$ensg1),as.character(epi_tgen$ensg2)))
 length(ensg_tgen_ver74)
 
-# ENSG IDs present in ver 74 and not present in ver 87
-ensg_87_vs_74_tgen<-ensg_tgen_ver74[!ensg_tgen_ver74%in%ensg_tgen_ver87]
-length(ensg_87_vs_74_tgen)#
+# ENSG IDs present in ver 74 and not present in ver 90
+ensg_90_vs_74_tgen<-ensg_tgen_ver74[!ensg_tgen_ver74%in%ensg_tgen_ver90]
+length(ensg_90_vs_74_tgen)#
 
 # Save to file
-write.table(ensg_87_vs_74_tgen, file = "ensg_87_vs_74_tgen.txt", quote = F, row.names = F, sep = "\t")
+#write.table(ensg_90_vs_74_tgen, file = "ensg_90_vs_74_tgen.txt", quote = F, row.names = F, sep = "\t")
 
 
 epi_tgen<-epi_tgen_2ensg[,c(6,7,3,4,5)]
@@ -130,11 +129,31 @@ epi_tgen <- epi_tgen[!duplicated(epi_tgen), ]
 dim(epi_tgen)
 
 # Write to files
-save(epi_tgen, file = "epi_tgen.RData")
-write.table(epi_tgen,file = "epi_tgen.txt",sep = "\t",quote = F, row.names = F)
+#save(epi_tgen, file = "epi_tgen.RData")
+#write.table(epi_tgen,file = "epi_tgen.txt",sep = "\t",quote = F, row.names = F)
 
 # Combine dataframes of LRG genes interactions and the rest
 epi_tgen_int <- rbind(epi_tgen,epi_tgen_lrg_fin)
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
+
+# Convert factors to characters
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+epi_tgen_int <- df2string(epi_tgen_int)
+str(epi_tgen_int)
+dim(epi_tgen_int)
+epi_tgen_int <- epi_tgen_int[!duplicated(data.frame(t(apply(epi_tgen_int[1:2], 1, sort)), epi_tgen_int[,c(3,5)])),]
+# New size
+dim(epi_tgen_int)
+
+
+
 
 #Save the part of the integrated dataset related to TGEN cohort
 save(epi_tgen_int, file = "epi_tgen_int.RData")

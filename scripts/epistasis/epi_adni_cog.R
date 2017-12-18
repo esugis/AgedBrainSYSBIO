@@ -1,10 +1,8 @@
-# Script splits complex ensg1-ensg2 names and formats the interactions to ensg1/ensg2/p-value/int
-# it also converts LRG ids to ENSG ids
-
+ Script preprocesses file containing epistatic interactions in cognitive traits from ADNI cohort.
 library(gProfileR)
 
 # Read the file related to ADNI cohort cognitive traits
-epi <- read.table(file = "~/AgedBrainSYSBIO/data/epistasis/ADNI_cognitive_traits.txt", header = T, stringsAsFactors = FALSE)
+epi <- read.table(file = "~/absb/data/epistasis/ADNI_CT_epistasis.txt", header = T, stringsAsFactors = FALSE)
 
 
 # Add ADNI general cohort code
@@ -14,7 +12,7 @@ epi$source <- paste("ADNI", epi$source, sep = "_")
 length(unique(epi$source))
 
 # Create the folder where current results will be written
-resdir <- "~/AgedBrainSYSBIO/results/epistasis/"
+resdir <- "~/absb/results/epistasis/"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -53,8 +51,8 @@ colnames(epi_adni_igri) <- c("ensg1","ensg2","score","interaction_type","data_so
 epi_adni_cog_igri <- epi_adni_igri
 
 # Save data for IGRI
-save(epi_adni_cog_igri, file = "epi_adni_cog_igri.RData")
-write.table(epi_adni_cog_igri,file = "epi_adni_cog_igri.txt",sep = "\t", quote = F, row.names = F)
+#save(epi_adni_cog_igri, file = "epi_adni_cog_igri.RData")
+#write.table(epi_adni_cog_igri,file = "epi_adni_cog_igri.txt",sep = "\t", quote = F, row.names = F)
 dim(epi_adni_cog_igri)
 
 # Combine with the main data frame 
@@ -119,7 +117,7 @@ ensg_lv_vs_74_adni_cog<-ensg_adni_cog_ver74[!ensg_adni_cog_ver74%in%ensg_adni_co
 length(ensg_lv_vs_74_adni_cog)
 
 # Save to file
-write.table(ensg_lv_vs_74_adni_cog, file = "ensg_lv_vs_74_adni_cog.txt", quote = F, row.names = F, sep = "\t")
+#write.table(ensg_lv_vs_74_adni_cog, file = "ensg_lv_vs_74_adni_cog.txt", quote = F, row.names = F, sep = "\t")
 
 # Find differences in IGRI
 epi_adni_cog_igri_ensg<-unique(c(as.character(epi_adni_cog_igri$ensg1),as.character(epi_adni_cog_igri$ensg2)))
@@ -144,12 +142,12 @@ epi_adni_cog_igri_ensg_ver74 <- curr_igri_ensg
 
 ensg_lv_vs_74_adni_cog_igri<-epi_adni_cog_igri_ensg_ver74[!epi_adni_cog_igri_ensg_ver74%in%epi_adni_cog_igri_ensg_lv]
 length(ensg_lv_vs_74_adni_cog_igri)
-write.table(ensg_lv_vs_74_adni_cog_igri, file = "ensg_lv_vs_74_adni_cog_igri.txt", quote = F, row.names = F, sep = "\t")
+#write.table(ensg_lv_vs_74_adni_cog_igri, file = "ensg_lv_vs_74_adni_cog_igri.txt", quote = F, row.names = F, sep = "\t")
 
 # Find overlap between missing IDs in IGRI and normal gene IDs
 ensg_lv_vs_74_adni_cog_all<-unique(c(ensg_lv_vs_74_adni_cog, ensg_lv_vs_74_adni_cog_igri))
 length(ensg_lv_vs_74_adni_cog_all)
-write.table(ensg_lv_vs_74_adni_cog_all, file = "ensg_lv_vs_74_adni_cog_all.txt", quote = F, row.names = F, sep = "\t")
+#write.table(ensg_lv_vs_74_adni_cog_all, file = "ensg_lv_vs_74_adni_cog_all.txt", quote = F, row.names = F, sep = "\t")
 
 # Exclude the rows with old ids that are not mapped to the latest Ensembl version 
 excluderow<-c()
@@ -170,14 +168,37 @@ for(i in 1:length(rownames(epi_adni_cog_igri))){
 epi_adni_cog_igri_lv <- epi_adni_cog_igri[!rownames(epi_adni_cog_igri)%in%excluderow,]
 
 # Save the results of the latest Ensembl version
-save(epi_adni_cog_igri_lv, file = "epi_adni_cog_igri_lv.RData")
-write.table(epi_adni_cog_igri_lv,file = "epi_adni_cog_igri_lv.txt",sep = "\t", quote = F, row.names = F)
+#save(epi_adni_cog_igri_lv, file = "epi_adni_cog_igri_lv.RData")
+#write.table(epi_adni_cog_igri_lv,file = "epi_adni_cog_igri_lv.txt",sep = "\t", quote = F, row.names = F)
 dim(epi_adni_cog_igri_lv)
 
 # Combine dataframes of IGRI and the rest genes interactions. Write final ds to the file
 epi_adni_cog_lv <- epi_adni_cog_2ensg
 epi_adni_cog_int <- rbind(epi_adni_cog_lv, epi_adni_cog_igri_lv)
 dim(epi_adni_cog_int)
+
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
+
+# Convert factors to characters
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# Epistatic interactions
+epi_adni_cog_int <- df2string(epi_adni_cog_int)
+str(epi_adni_cog_int)
+dim(epi_adni_cog_int)
+
+# Remove the duplicated undirrescted edges with the same score.
+# For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
+epi_adni_cog_int <- epi_adni_cog_int[!duplicated(data.frame(t(apply(epi_adni_cog_int[1:2], 1, sort)), epi_adni_cog_int[,c(3,5)])),]
+# New size
+dim(epi_adni_cog_int)
+
 
 # Save the part of the integrated dataset related to cognitive traits studies in ADNI cohort
 save(epi_adni_cog_int, file = "epi_adni_cog_int.RData")

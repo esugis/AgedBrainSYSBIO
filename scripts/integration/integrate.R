@@ -54,15 +54,15 @@ return (df)}
 
 
 # Epistatic interactions
-epistasis_all_int <- df2string(epistasis_all_int)
-str(epistasis_all_int)
-dim(epistasis_all_int)
+#epistasis_all_int <- df2string(epistasis_all_int)
+#str(epistasis_all_int)
+#dim(epistasis_all_int)
 
 # Remove the duplicated undirrescted edges with the same score.
 # For example ENSG1-ENSG2 0.5 and ENSG2-ENSG 0.5
-epistasis_all_int <- epistasis_all_int[!duplicated(data.frame(t(apply(epistasis_all_int[1:2], 1, sort)), epistasis_all_int[,c(3,5)])),]
+#epistasis_all_int <- epistasis_all_int[!duplicated(data.frame(t(apply(epistasis_all_int[1:2], 1, sort)), epistasis_all_int[,c(3,5)])),]
 # New size
-dim(epistasis_all_int)
+#dim(epistasis_all_int)
 
 ## PPIs from IntAct
 #intact_int=df2string(intact_int)
