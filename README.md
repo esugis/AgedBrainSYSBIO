@@ -3,7 +3,7 @@ The scripts in this repository were used to create integrated dataset described 
 *Bringing together heterogeneous datasets related to Alzheimer's disease, Sügis et. al., 2018*
 For detailed description of the methods please see the publication.
 
-**NB! This file contains information about the structure of the files and some useful notes.**
+**NB! This file contains information about the structure of the files and some useful notes on how to repeat the analysis.**
 
 ## CLONING REPOSITORY
 To clone repository to your local machine use the following command:  
