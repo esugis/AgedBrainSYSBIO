@@ -3,9 +3,7 @@ Bringing together heterogeneous datasets related to Alzheimer's disease.
 
 This set of  R scripts were used to create integrated dataset described in the article:
 
-Bringing together heterogeneous datasets related to Alzheimer's disease
-Elena Sügis1,2† , Jerome Dauvillier3† , Priit Adler1,2, Valerie Hindie4 , Thomas Moncion4 , Vincent Collura4 , Rachel Daudin5,6, Yann Loe-Mie5,6,Yann Herault7 , Jean-Charles Lambert8 , Henning Hermjakob9 ,Tal Pupko10, Jean-Christophe Rain4 , Ioannis Xenarios3,11, Jaak Vilo1,2, Michel Simonneau5,6*, Hedi Peterson1,2*
-*corresponding author(s): Michel Simonneau (michel.simonneau@inserm.fr), Hedi Peterson (peterson@quretec.com) †these authors contributed equally to this work
+Bringing together heterogeneous datasets related to Alzheimer's disease, Sügis et. al., 2018,
 
 For detailed description of the methods, please see the publication.
 
