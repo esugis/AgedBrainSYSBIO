@@ -2,7 +2,7 @@
 # and  adds biotype of all the genes(gwas, allen brain atlas, IntAct, pba, epistasis, co-expression)
 
 # Create the folder where current results will be written
-resdir<-paste("~/AgedBrainSYSBIO/results","integration",sep="/")
+resdir<-paste("~/absb/results","integration",sep="/")
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
@@ -10,12 +10,12 @@ setwd(resdir)
 
 # Load individual  datasets of gene attributes
 
-load(file="~/AgedBrainSYSBIO/results/gwas/gwas_ensg.RData")
-load(file="~/AgedBrainSYSBIO/results/allenbrain/mtx_zscores_max_sorted.RData")
-load(file="~/AgedBrainSYSBIO/results/ps/ps.RData")
+load(file="~/absb/results/gwas/gwas_ensg.RData")
+load(file="~/absb/results/allenbrain/mtx_zscores_max_sorted.RData")
+load(file="~/absb/results/ps/ps.RData")
 
 # Load integrated interactions
-load(file="~/AgedBrainSYSBIO/results/integration/integrated_int.RData")
+load(file="~/absb/results/integration/integrated_int.RData")
 
 
 # Extract ensg ids
@@ -83,7 +83,7 @@ save(node_attr, file="node_attributes.RData")
 # Combine interactions and attributes
 integrated_int_1attr <- merge(integrated_int, node_attr, by.x="ensg1", by.y="ensg", all.x=T)
 integrated_int_attr <-	merge(integrated_int_1attr, node_attr, by.x="ensg2", by.y="ensg", all.x=T)
-integrated_int_attr <-integrated_int_attr[!duplicated(integrated_int_attr), ]
+integrated_int_attr <- integrated_int_attr[!duplicated(integrated_int_attr), ]
 integrated_int_attr <- cbind(integrated_int_attr$ensg1, integrated_int_attr)
 integrated_int_attr <- integrated_int_attr[, -3]
 colnames(integrated_int_attr)[1] <- "ensg1"
