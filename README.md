@@ -104,8 +104,10 @@ All necessary datasets will be downloaded into the corresponding locations:
 ### General information.
 Project scripts are essentially serve for three purposes.      
 1. The first category of scripts are used to preprocess and analyse the datasets related to the experimental (Y2H PPIs, PPIs from IntAct) and computational (epistasis, co-expression) interactions.      
-2. The second category of scripts are used to preprocess and analyse the datasets related to the genes and proteins present in the interactions from 2.1.1, i.e. GWAS, expression in the brain regions, etc.         
-3. The third group of scripts are used to assemble (integrate) the individual resulting datasets  about the interactions from 2.1.1 and the individual genes and proteins from 2.2.2.      
+2. The second category of scripts are used to preprocess and analyse the datasets related to the genes and proteins present in the interactions from clause 1, i.e. GWAS, expression in the brain regions, etc.         
+3. The third group of scripts are used to assemble (integrate) the individual resulting datasets  about the interactions from 2.1.1 and the individual genes and proteins from clause 2.      
+4. Attach all R libraries used in the project.
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── libraries.R  
 
 #### 1.1 Calculation of gene co-expression using microarray data. 
 1.1.1 Filtering out probesets with SD < 0.29. Extracting Alzheimer’s related and healthy samples from the data sets. Calculating the co-expression between  all probesets in each of the data sets using  Spearman correlation coefficient. For each individual probeset in each of the datasets script creates 2 separate files in .txt and .RData formats. Files are named after the probeset. Created files contain the names of the correlated probesets and the corresponding Spearman coefficient.
@@ -211,11 +213,13 @@ Script adds missing columns to match the integrated dataset format interaction_t
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── positive_selection.R     
 
 ### 3. Integrate individual results for interactions and interactors.
-Location : “ ~/AgedBrainSYSBIO/scripts/integration” 
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── integration  
 
-3.1 All types of interactions are combines using integrate.R script.
+3.1 Combine interactions.
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── integrate.R  
 
-3.2 All the nodes attributes are combined using integrate_node_attributes.R script.
+3.2 Combine interactors' attributes.
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;└── integrate_node_attributes.R  
 
 ## RESULTS
 The results of the intermediate analysis are save as .RData and .txt formats. They are placed into the newly created folder **AgedBrainSYSBIO/results**.      
