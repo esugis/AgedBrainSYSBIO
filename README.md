@@ -7,7 +7,7 @@ This set of  R scripts were used to create integrated dataset described in the a
 
 For detailed description of the methods, please see the publication.
 
-**This file contains information about the structure of the files and some useful notes.**
+**NB! This file contains information about the structure of the files and some useful notes.**
 
 ## CLONING REPOSITORY
 To clone repository to your local machine use the following command:  
