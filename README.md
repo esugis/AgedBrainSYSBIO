@@ -101,15 +101,15 @@ All necessary datasets will be downloaded into the corresponding locations:
 
 ## SCRIPTS
 
-### 1. Data location
-Please specify in the beginning of the script the path to the dataset(s) that you are going to process.
-For easier organisation of your project you can save the uploaded data into the folder “data” with the corresponding 
-
-### 2. Scripts related to the calculation of interactions are located in the following folders:
+### 2.1 General information.
+Project scripts are essentially serve for three purposes.
+2.1.1 The first category of scripts are used to preprocess and analyse the datasets related to the experimental (Y2H PPIs, PPIs from IntAct) and computational (epistasis, co-expression) interactions. 
+2.1.2 The second category of scripts are used to preprocess and analyse the datasets related to the genes and proteins present in the interactions from 2.1.1, i.e. GWAS, expression in the brain regions, etc.   
+2.1.3 The third group of scripts are used to assemble (integrate) the individual resulting datasets  about the interactions from 2.1.1 and the individual genes and proteins from 2.2.2.
 
 #### 2.2 Calculation of gene co-expression using microarray data. 
 
-2.2.1 Filtering out probesets with SD < 0.29. Extracting Alzheimer’s related and healthy samples from the data sets. Calculating the co-expression between  all probesets in each of the data sets using  Spearman correlation coefficient. For each individual probeset in each of the datasets script creates 2 separate files in .txt and .RData formats. Files are named after the probeset. Created files contain the names of the correlated probesets and the corresponding Spearman coefficient.
+2.1.1 Filtering out probesets with SD < 0.29. Extracting Alzheimer’s related and healthy samples from the data sets. Calculating the co-expression between  all probesets in each of the data sets using  Spearman correlation coefficient. For each individual probeset in each of the datasets script creates 2 separate files in .txt and .RData formats. Files are named after the probeset. Created files contain the names of the correlated probesets and the corresponding Spearman coefficient.
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|── adn  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── E_GEOD_18309.R  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── E_GEOD_28146.R  
@@ -123,7 +123,6 @@ Results are written into files for individual probesets
 pathRdata <- "~/AgedBrainSYSBIO/results/adn/all_probes/rdata/E_GEOD_18309/"
 pathtxt <- "~/AgedBrainSYSBIO/results/adn/all_probes/txt/E_GEOD_18309/"
 ```
-
 2.1.2 Ranking the co-expressed values for each probeset in each of the datasets. Aggregating the ranks in all the datasets.
 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   &nbsp;&nbsp;&nbsp;&nbsp;|── RRA_probesets.R  
 
