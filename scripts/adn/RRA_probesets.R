@@ -6,7 +6,7 @@
 # Aggregates the ranks in vectors
 
 # Path to the folder where selults will be stored
-pathRdata <- "~/AgedBrainSYSBIO/results/adn/all/probes/scores/rdata/"
+pathRdata <- "~/absb/results/adn/all_probes/scores/rdata/"
 dir.create(file.path(pathRdata),showWarnings = FALSE, recursive = TRUE)
 
 # Load the probesets names
@@ -19,7 +19,7 @@ load(file <- "~/absb/results/adn/all_probes/E_MEXP_2280_all_probes.RData")
 
 # Select unique probesets
 genes <- unique(c(E_GEOD_18309_pr, E_GEOD_28146_pr, E_GEOD_29652_pr, E_GEOD_4757_pr, E_GEOD_5281_pr, E_MEXP_2280_pr))
-dim(genes)
+length(genes)
 
 # Paths to the coexpression results in each dataset
 pathRdata_E_GEOD_18309 <- "~/absb/results/adn/all_probes/rdata/E_GEOD_18309/"
@@ -94,10 +94,10 @@ filedata <- sprintf("%s.RData",gene);
 
 # Path name to save the results
 pathdata_scores <- "~/absb/results/adn/all_probes/scores/rdata/"
-pathtxt_scores <- "~/absb/results/adn/all_probes/scores/txt/"
-pathname <- file.path(pathtxt_scores, filename);
+#pathtxt_scores <- "~/absb/results/adn/all_probes/scores/txt/"
+#pathname <- file.path(pathtxt_scores, filename);
 pathdata <- file.path(pathdata_scores, filedata);
-write.table(ar_gene, file=pathname, sep="\t", quote=F, row.names=F);
+#write.table(ar_gene, file=pathname, sep="\t", quote=F, row.names=F);
 save(ar_gene,file=pathdata)
 
 } 

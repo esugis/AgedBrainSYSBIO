@@ -22,3 +22,9 @@ library("R.utils")
 
 install.packages("ncdf4")
 library(ncdf4)
+
+install.packages("RobustRankAggreg")
+library(RobustRankAggreg)
+
+install.packages("doMC")
+library(doMC)

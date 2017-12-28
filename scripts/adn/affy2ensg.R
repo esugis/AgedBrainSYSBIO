@@ -223,6 +223,8 @@ test$gsub_probes <- as.character(test$gsub_probes)
 # Find nonmatching rows
 test_non_eq_rows <- test[!test$initial_probes==test$gsub_probes, ]
 
+
+#!!! load when computation on krokodill is over
 # Convert the missing IDs to ensg.
 # Load the converted
 load(file = "affy2ensg.RData")
