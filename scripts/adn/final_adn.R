@@ -25,10 +25,26 @@ colnames(alzcoexp_int) <- c("ensg1","ensg2", "score", "interaction_type","data_s
 # Check the size
 dim(alzcoexp_int)
 
-# Sanity check for self-loops 
-alzcoexp_int <- subset(alzcoexp_int, !ensg1 == ensg2)
+# Remove the duplicated undirrescted edges with the same score.
+# For example, ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
 
-# Size after self-loops were removed
+# Convert factors to characters
+df2string<-function(df){
+i <- sapply(df, is.factor)
+df[i] <- lapply(df[i], as.character)
+df[,3]<-as.numeric(df[,3])
+return (df)}
+
+# Co-expression in Alzheimer's and normal brain
+alzcoexp_int <- df2string(alzcoexp_int)
+str(alzcoexp_int)
+alzcoexp_int <- alzcoexp_int[!duplicated(alzcoexp_int), ]
+dim(alzcoexp_int)
+alzcoexp_int <- alzcoexp_int[!duplicated(data.frame(t(apply(alzcoexp_int[1:2], 1, sort)), alzcoexp_int$score)),]
+# New size
+dim(alzcoexp_int)
+
+# Size after self-loops and duplicated interactions were removed
 dim(alzcoexp_int)
 
 head(alzcoexp_int)

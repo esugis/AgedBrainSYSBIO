@@ -1,7 +1,7 @@
 # Script combines all epistatic data into one ds.
 
 # Create the folder where current results will be written
-resdir <- "~/AgedBrainSYSBIO/results/epistasis/"
+resdir <- "~/absb/results/epistasis/"
 dir.create(file.path(resdir),showWarnings = FALSE, recursive = TRUE)
 
 # Set created directory as working dirrectory
