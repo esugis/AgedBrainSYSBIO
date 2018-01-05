@@ -230,7 +230,12 @@ intact_int <- intact_int[!duplicated(intact_int), ]
 dim(intact_int)
 intact_int <- intact_int[!duplicated(data.frame(t(apply(intact_int[1:2], 1, sort)), intact_int$score)),]
 # New size
-dim(intact_int)# 44258     5/ !!!!74979     5
+dim(intact_int)# !!!!74979     5
+
+
+# Exclude interaction_type = "UCPPI" from the integrated dataset
+intact_int <- intact_int[!intact_int$interaction_type%in%"UCPPI",]
+dim(intact_int) #  64774     5
 
 #Save the part of the integrated dataset from IntAct PPI and PCI for human
 save(intact_int, file = "intact_int.RData")

@@ -214,6 +214,10 @@ syn_intact_int <- syn_intact_int[!duplicated(data.frame(t(apply(syn_intact_int[1
 # New size
 dim(syn_intact_int)#  [1] 372   5
 
+ Exclude interaction_type = "UCPPI" from the integrated dataset
+syn_intact_int <- syn_intact_int[!syn_intact_int$interaction_type%in%"UCPPI",]
+dim(syn_intact_int)     #362  5
+
 #Save the part of the integrated dataset from Synapse IntAct PPI and UCPPI for human
 save(syn_intact_int, file = "syn_intact_int.RData")
 write.table(syn_intact_int, file = "syn_intact_int.txt", sep = "\t", quote = F, row.names = F)

@@ -210,6 +210,11 @@ alz_intact_int <- alz_intact_int[!duplicated(data.frame(t(apply(alz_intact_int[1
 # New size
 dim(alz_intact_int)# 112 
 
+
+# Exclude interaction_type = "UCPPI" from the integrated dataset
+alz_intact_int <- alz_intact_int[!alz_intact_int$interaction_type%in%"UCPPI",]
+dim(alz_intact_int)	# 111 5
+
 #Save the part of the integrated dataset from Alzheimer's disease IntAct PPI and UCPPI for human
 save(alz_intact_int, file = "alz_intact_int.RData")
 write.table(alz_intact_int, file = "alz_intact_int.txt", sep = "\t", quote = F, row.names = F)
