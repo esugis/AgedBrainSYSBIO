@@ -13,30 +13,21 @@ pba_ppi.hs <- read.table(file = "~/absb/data/pba/PBA_PPI_HS.txt", sep = "\t", he
 # Data size
 dim(pba_ppi.hs ) #2032    5
 
-# Convert text to upper case
-pba_ppi.hs[,1] <- toupper(pba_ppi.hs[,1])
-pba_ppi.hs[,2] <- toupper(pba_ppi.hs[,2])
-pba_ppi.hs[,3] <- toupper(pba_ppi.hs[,3])
-pba_ppi.hs[,4] <- toupper(pba_ppi.hs[,4])
-
 # Convert pba_ppi.hs protein names to ENSG and bing them to the dataframe.
-length(unique(c(pba_ppi.hs[,1], pba_ppi.hs[,3])))#1269
+length(unique(c(pba_ppi.hs[,1], pba_ppi.hs[,2])))#1250
 
-library(gProfileR)
-AB2ENSG.h <- gconvert(unique(c(pba_ppi.hs[,1], pba_ppi.hs[,3])))
+pba_pr <- unique(c(pba_ppi.hs[,1], pba_ppi.hs[,2]))
 
-head(AB2ENSG.h)
-AB2ENSG.hyb.hs <- AB2ENSG.h
-save(AB2ENSG.hyb.hs, file = "AB2ENSG_hyb_hs.RData")#use afterwards for the description of the interactors
-
-dim(AB2ENSG.hyb.hs)
-AB2ENSG.hyb.hs <- AB2ENSG.hyb.hs[!duplicated(AB2ENSG.hyb.hs), ]
-dim(AB2ENSG.hyb.hs)
+# Convert entrezgene IDs to ENSG IDs
+library(biomaRt)
+pba_entrez2ensg <-  getBM(attributes = c("entrezgene","ensembl_gene_id"),filters=c("entrezgene"), values = pba_pr, mart = mart.pr)
+dim(pba_entrez2ensg )#[1] 1265    2
+colnames(pba_entrez2ensg)[]<-c(".id", "Target")
 
 # Merge for the first interactor
-dim(merge(pba_ppi.hs, AB2ENSG.hyb.hs, by.x = "name.p1", by.y = ".id", all = F))
-pba_ppi.hs.p1 = merge(pba_ppi.hs, AB2ENSG.hyb.hs, by.x = "name.p1", by.y = ".id", all = F)
-pba_ppi.hs.p1p2 <- merge(pba_ppi.hs.p1, AB2ENSG.hyb.hs, by.x = "name.p2", by.y = ".id", all = F)
+dim(merge(pba_ppi.hs, pba2ensg, by.x = "entrez.p1", by.y = ".id", all = F))
+pba_ppi.hs.p1 = merge(pba_ppi.hs, pba_entrez2ensg, by.x = "entrez.p1", by.y = ".id", all = F)
+pba_ppi.hs.p1p2 <- merge(pba_ppi.hs.p1, pba_entrez2ensg, by.x = "entrez.p2", by.y = ".id", all = F)
 pba_ppi.hs.ensg <- pba_ppi.hs.p1p2[, c(6,7,5)]
 save(pba_ppi.hs.p1p2, file = "pba_ppi.hs.p1p2.RData")#file describes interactions where both partners are proteins
 
@@ -62,14 +53,14 @@ pba_int <- df2string(pba_int)
 str(pba_int)
 
 # Initial size
-dim(pba_int) 
+dim(pba_int) #1836    5
 
 # Remove the duplicated undirrescted edges with the same score.
 # For example ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
 pba_int <- pba_int[!duplicated(data.frame(t(apply(pba_int[1:2], 1, sort)), pba_int$score)),]
 
 # New size
-dim(pba_int)# 1973    5
+dim(pba_int)# 1834    5
 
 # Save the part of the integrated dataset related to interactions in HS.
 save(pba_int, file = "pba_int.RData")
