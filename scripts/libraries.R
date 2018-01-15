@@ -28,3 +28,9 @@ library(RobustRankAggreg)
 
 install.packages("doMC")
 library(doMC)
+
+install.packages("tidyr")
+libray(tidyr)
+
+install.packaged("dplyr")
+library(dplyr)

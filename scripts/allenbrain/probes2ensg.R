@@ -33,8 +33,9 @@ save(p2ensg6, file = "p2ensg6.RData")
 
 # Combine all converted names
 p2ensg <- rbind(p2ensg1,p2ensg2,p2ensg3,p2ensg4,p2ensg5,p2ensg6)
-
-# Sizee of the converted data frame
+p2ensg <- p2ensg[, c(2,4)] 
+colnames(p2ensg) <- c(".id", "Target")
+# Size of the converted data frame
 dim(p2ensg)
 
 # Remove duplicates

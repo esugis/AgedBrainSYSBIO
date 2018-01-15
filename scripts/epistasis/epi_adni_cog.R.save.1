@@ -4,6 +4,7 @@ library(gProfileR)
 # Read the file related to ADNI cohort cognitive traits
 epi <- read.table(file = "~/absb/data/epistasis/ADNI_CT_epistasis.txt", header = T, stringsAsFactors = FALSE)
 
+
 # Add ADNI general cohort code
 epi$source <- paste("ADNI", epi$source, sep = "_")
 
@@ -40,7 +41,6 @@ epi_adni_igri_tmp <- epi[rownames(epi)%in%rows_cut, c(1, 2, 9, 10)]
 # Bind columns with interaction type, direction, evidence code.
 # Interaction type named intergenic region interaction (IGRI)
 epi_adni_igri <- cbind(epi_adni_igri_tmp[,c(1,2,4)], interaction_type = "IGRI")
-
 # Data source
 epi_adni_igri <- cbind(epi_adni_igri, data_source = epi_adni_igri_tmp$source) 
 
@@ -61,6 +61,7 @@ dim(epi_adni_cog_igri)
 epi_adni_cog_tmp <- epi[!row.names(epi)%in%rows_cut, c(1, 2, 9, 10)]
 dim(epi_adni_cog_tmp) 
 
+
 # Bind columns with interaction type, direction, evidence code.
 # Interaction type intergenic region interaction
 epi_adni_cog <- cbind(epi_adni_cog_tmp[,c(1,2,4)], interaction_type = "epistasis")
@@ -80,10 +81,9 @@ length(curr_id)
 library(biomaRt)
 mart.pr <- useMart("ENSEMBL_MART_ENSEMBL", "hsapiens_gene_ensembl", host = "ensembl.org")
 curr_id2ensg <- getBM(attributes = c("ensembl_gene_id"), filters=c("ensembl_gene_id"), values = curr_id, mart = mart.pr)
-curr_id2ensg <-as.character(as.vector(curr_id2ensg$ensembl_gene_id))
+curr_id2ensg <- as.character(as.vector(curr_id2ensg$ensembl_gene_id))
+epi_adni_cog_2ensg <- epi_adni_cog[epi_adni_cog$]
 
-epi_adni_cog_2ensg <- epi_adni_cog[epi_adni_cog$ensg1%in%curr_id2ensg,]
-epi_adni_cog_2ensg <- epi_adni_cog_2ensg[epi_adni_cog_2ensg$ensg2%in%curr_id2ensg,]
 
 # Convert using gProfiler
 #curr_id <- as.character(curr_id)
@@ -105,6 +105,8 @@ epi_adni_cog_2ensg <- epi_adni_cog_2ensg[epi_adni_cog_2ensg$ensg2%in%curr_id2ens
 #colnames(epi_adni_cog_2ensg)[1:2] <- c("ensg1","ensg2")
 #epi_adni_cog_2ensg<-na.omit(epi_adni_cog_2ensg)
 #dim(epi_adni_cog_2ensg) 
+
+
 
 # Size of the dataset with old ENSG IDs(ver 74) converted to the latest ENSG version
 dim(epi_adni_cog_2ensg)
@@ -135,31 +137,25 @@ curr_igri_ensg<-unique(unlist(str_split(epi_adni_cog_igri_ensg,"-")))
 # Number of the current version ENSG ids
 length(curr_igri_ensg)
 
-#Convert gene ids and ensg id to the latest Ensembl using biomart
-mart.pr <- useMart("ENSEMBL_MART_ENSEMBL", "hsapiens_gene_ensembl", host = "ensembl.org")
-epi_adni_cog_igri_ensg2ensg <- getBM(attributes = c("ensembl_gene_id"), filters=c("ensembl_gene_id"), values = curr_igri_ensg, mart = mart.pr)
-epi_adni_cog_igri_ensg_lv <-as.character(as.vector(epi_adni_cog_igri_ensg2ensg$ensembl_gene_id))
-
-
 # Convert gene ids and ensg id to the latest Ensembl version using gProfiler
-#epi_adni_cog_igri_ensg2ensg <- gconvert(curr_igri_ensg)
-#epi_adni_cog_igri_ensg2ensg <- epi_adni_cog_igri_ensg2ensg[, c(2,4)]
-#colnames(epi_adni_cog_igri_ensg2ensg) <- c("id", "target")
-#dim(epi_adni_cog_igri_ensg2ensg)
-#epi_adni_cog_igri_ensg2ensg <- epi_adni_cog_igri_ensg2ensg[!duplicated(epi_adni_cog_igri_ensg2ensg), ]
-#dim(epi_adni_cog_igri_ensg2ensg)
-#epi_adni_cog_igri_ensg_lv<-unique(as.character(epi_adni_cog_igri_ensg2ensg$target))
-#epi_adni_cog_igri_ensg_lv <- na.omit(epi_adni_cog_igri_ensg_lv)
 
-# Old ensg IDs
+epi_adni_cog_igri_ensg2ensg <- gconvert(curr_igri_ensg)
+epi_adni_cog_igri_ensg2ensg <- epi_adni_cog_igri_ensg2ensg[, c(2,4)]
+colnames(epi_adni_cog_igri_ensg2ensg) <- c("id", "target")
+dim(epi_adni_cog_igri_ensg2ensg)
+
+epi_adni_cog_igri_ensg2ensg <- epi_adni_cog_igri_ensg2ensg[!duplicated(epi_adni_cog_igri_ensg2ensg), ]
+dim(epi_adni_cog_igri_ensg2ensg)
+
+epi_adni_cog_igri_ensg_lv<-unique(as.character(epi_adni_cog_igri_ensg2ensg$target))
+epi_adni_cog_igri_ensg_lv <- na.omit(epi_adni_cog_igri_ensg_lv)
 epi_adni_cog_igri_ensg_ver74 <- curr_igri_ensg
 
-# Find the differebce between old and new
 ensg_lv_vs_74_adni_cog_igri<-epi_adni_cog_igri_ensg_ver74[!epi_adni_cog_igri_ensg_ver74%in%epi_adni_cog_igri_ensg_lv]
 length(ensg_lv_vs_74_adni_cog_igri)
 #write.table(ensg_lv_vs_74_adni_cog_igri, file = "ensg_lv_vs_74_adni_cog_igri.txt", quote = F, row.names = F, sep = "\t")
 
-# Find overlap between missing IDs in IGRI and new gene IDs
+# Find overlap between missing IDs in IGRI and normal gene IDs
 ensg_lv_vs_74_adni_cog_all<-unique(c(ensg_lv_vs_74_adni_cog, ensg_lv_vs_74_adni_cog_igri))
 length(ensg_lv_vs_74_adni_cog_all)
 #write.table(ensg_lv_vs_74_adni_cog_all, file = "ensg_lv_vs_74_adni_cog_all.txt", quote = F, row.names = F, sep = "\t")
@@ -220,8 +216,11 @@ rm_ensg <- c(epi_adni_cog_int$ensg1,epi_adni_cog_int$ensg2)
 epi_adni_cog_int <- epi_adni_cog_int[!epi_adni_cog_int$ensg1%in%rm_ensg[grep("^-.*",rm_ensg)],]
 epi_adni_cog_int <- epi_adni_cog_int[!epi_adni_cog_int$ensg2%in%rm_ensg[grep("^-.*",rm_ensg)],]
 
+rm_ensg <- c(epi_adni_cog_int$ensg1,epi_adni_cog_int$ensg2)
 epi_adni_cog_int <- epi_adni_cog_int[!epi_adni_cog_int$ensg1%in%rm_ensg[grep("\\ENSG.*-$",rm_ensg)],]
 epi_adni_cog_int <- epi_adni_cog_int[!epi_adni_cog_int$ensg2%in%rm_ensg[grep("\\ENSG.*-$",rm_ensg)],]
+
+
 
 # Save the part of the integrated dataset related to cognitive traits studies in ADNI cohort
 save(epi_adni_cog_int, file = "epi_adni_cog_int.RData")

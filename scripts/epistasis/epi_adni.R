@@ -57,12 +57,16 @@ colnames(epi_adni) <- c("ensg1","ensg2","score","interaction_type","data_source"
 # Convert gene ids and ensg id to tha latest Ensembl version
 # First interactor
 epi_adni_ensg12ensg <- gconvert(epi_adni$ensg1)
+epi_adni_ensg12ensg <- epi_adni_ensg12ensg[, c(2,4)]
+colnames(epi_adni_ensg12ensg) <- c(".id", "Target")
 dim(epi_adni_ensg12ensg)
 epi_adni_ensg12ensg <- epi_adni_ensg12ensg[!duplicated(epi_adni_ensg12ensg), ]
 dim(epi_adni_ensg12ensg)
 
 # Second interactor
 epi_adni_ensg22ensg <- gconvert(epi_adni$ensg2)
+epi_adni_ensg22ensg <- epi_adni_ensg22ensg[, c(2,4)]
+colnames(epi_adni_ensg22ensg) <- c(".id", "Tartget")
 dim(epi_adni_ensg22ensg)
 epi_adni_ensg22ensg <- epi_adni_ensg22ensg[!duplicated(epi_adni_ensg22ensg), ]
 dim(epi_adni_ensg22ensg)
@@ -104,6 +108,8 @@ length(epi_adni_igri_ensg)
 
 # Convert gene ids and ensg id to tha latest Ensembl version
 epi_adni_igri_ensg12ensg <- gconvert(epi_adni_igri_ensg)
+epi_adni_igri_ensg12ensg <- epi_adni_igri_ensg12ensg[, c(2,4)]
+colnames(epi_adni_igri_ensg12ensg) <- c(".id", "Target")
 dim(epi_adni_igri_ensg12ensg)
 
 epi_adni_igri_ensg12ensg <- epi_adni_igri_ensg12ensg[!duplicated(epi_adni_igri_ensg12ensg), ]

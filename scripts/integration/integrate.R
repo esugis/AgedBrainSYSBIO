@@ -55,5 +55,5 @@ write.table(integrated_int, file = "integrated_int.txt", sep="\t", quote=F, row.
 
 
 # Size of integrated dataset
-dim(integrated_int)
+dim(integrated_int) #144015     5
 

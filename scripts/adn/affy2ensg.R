@@ -33,6 +33,8 @@ gene_list <- unique(c(E_GEOD_18309_pr, E_GEOD_28146_pr, E_GEOD_29652_pr, E_GEOD_
 
 # Convert gene_list to ENSG
 affy2ensg <- gconvert(gene_list)
+affy2ensg <- affy2ensg[,c(2,4)]
+colnames(affy2ensg)<-c(".id", "Target")
 
 # Dimentions of the result
 dim(affy2ensg)
@@ -224,7 +226,6 @@ test$gsub_probes <- as.character(test$gsub_probes)
 test_non_eq_rows <- test[!test$initial_probes==test$gsub_probes, ]
 
 
-#!!! load when computation on krokodill is over
 # Convert the missing IDs to ensg.
 # Load the converted
 load(file = "affy2ensg.RData")
@@ -238,7 +239,9 @@ missing_ids <- test$initial_probes[!test$initial_probes%in%affy2ensg$.id]
 save(missing_ids, file = "missing_ids.RData")
 
 # Convert missing_ids  to ENSG
-affy2ensg_missing = gconvert(missing_ids)
+affy2ensg_missing <- gconvert(missing_ids)
+affy2ensg_missing <- affy2ensg_missing[, c(2,4)]
+colnames(affy2ensg_missing)<-c(".id", "Target")
 affy2ensg_missing <- affy2ensg_missing[!duplicated(affy2ensg_missing), ]
 
 # Dimentions

@@ -33,7 +33,9 @@ rows_cut <- row.names(epi_b)
 
 # Convert LRG to ENSG
 B <- as.character(epi_b$ENSG_B)
-LRG2ensg_tgen  <-  gconvert(B)
+LRG2ensg_tgen <- gconvert(B)
+LRG2ensg_tgen <- LRG2ensg_tgen[, c(2,4)]
+colnames(LRG2ensg_tgen) <- c(".id", "Target")
 
 # Save to the file in RData and txt formats 
 #save(LRG2ensg_tgen, file = "LRG2ensg_tgen.RData")
@@ -78,7 +80,9 @@ colnames(epi_cut_fin) <- c("ensg1","ensg2","score","interaction_type","data_sour
 epi_tgen <- epi_cut_fin
 
 # Convert gene ids and ensg id to tha latest Ensembl version
-epi_tgen_ensg12ensg  <-  gconvert(epi_tgen$ensg1)
+epi_tgen_ensg12ensg <- gconvert(epi_tgen$ensg1)
+epi_tgen_ensg12ensg <- epi_tgen_ensg12ensg[, c(2,4)]
+colnames(epi_tgen_ensg12ensg) <- c(".id", "Target") 
 dim(epi_tgen_ensg12ensg)
 
 # Remove duplicates
@@ -86,7 +90,9 @@ epi_tgen_ensg12ensg <- epi_tgen_ensg12ensg[!duplicated(epi_tgen_ensg12ensg), ]
 dim(epi_tgen_ensg12ensg)
 
 # Convert second column of interactors
-epi_tgen_ensg22ensg  <-  gconvert(epi_tgen$ensg2)
+epi_tgen_ensg22ensg <- gconvert(epi_tgen$ensg2)
+epi_tgen_ensg22ensg <- epi_tgen_ensg22ensg[, c(2,4)]
+colnames(epi_tgen_ensg22ensg) <- c(".id", "Target")
 dim(epi_tgen_ensg22ensg)
 
 # Remove duplicates

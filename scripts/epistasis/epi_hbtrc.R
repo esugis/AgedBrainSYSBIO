@@ -27,6 +27,8 @@ rows_cut=row.names(epi_b)
 # Convert LRG to ENSG
 B=as.character(epi_b$ENSG_B)
 LRG2ensg_hbtrc = gconvert(B)
+LRG2ensg_hbtrc <- LRG2ensg_hbtrc[,c(2,4)]
+colnames(LRG2ensg_hbtrc) <-c(".id", "Target")
 
 # Write results
 #save(LRG2ensg_hbtrc, file="LRG2ensg_hbtrc.RData")
@@ -72,27 +74,31 @@ colnames(epi_cut_fin)=c("ensg1","ensg2","score","interaction_type","data_source"
 epi_hbtrc=epi_cut_fin
 
 # Convert gene ids and ensg id to tha latest Ensembl version
-epi_hbtrc_ensg12ensg = gconvert(epi_hbtrc$ensg1)
+epi_hbtrc_ensg12ensg <- gconvert(epi_hbtrc$ensg1)
+epi_hbtrc_ensg12ensg <- epi_hbtrc_ensg12ensg[,c(2,4)]
+colnames(epi_hbtrc_ensg12ensg)<-c(".id","Target")
 dim(epi_hbtrc_ensg12ensg)
 
 # Remove duplicates
-epi_hbtrc_ensg12ensg=epi_hbtrc_ensg12ensg[!duplicated(epi_hbtrc_ensg12ensg), ]
+epi_hbtrc_ensg12ensg <- epi_hbtrc_ensg12ensg[!duplicated(epi_hbtrc_ensg12ensg), ]
 dim(epi_hbtrc_ensg12ensg)
 
 # Convert ids
-epi_hbtrc_ensg22ensg = gconvert(epi_hbtrc$ensg2)
+epi_hbtrc_ensg22ensg <- gconvert(epi_hbtrc$ensg2)
+epi_hbtrc_ensg22ensg <- epi_hbtrc_ensg22ensg[,c(2,4)]
+colnames(epi_hbtrc_ensg22ensg) <- c(".id", "Target")
 dim(epi_hbtrc_ensg22ensg)
 
 # Remove duplicates
-epi_hbtrc_ensg22ensg=epi_hbtrc_ensg22ensg[!duplicated(epi_hbtrc_ensg22ensg), ]
+epi_hbtrc_ensg22ensg <- epi_hbtrc_ensg22ensg[!duplicated(epi_hbtrc_ensg22ensg), ]
 dim(epi_hbtrc_ensg22ensg)
 
 # Merge by ensg1
-epi_hbtrc_2ensg=merge(epi_hbtrc,epi_hbtrc_ensg12ensg, by.x="ensg1", by.y=".id", all=F)
+epi_hbtrc_2ensg <- merge(epi_hbtrc,epi_hbtrc_ensg12ensg, by.x="ensg1", by.y=".id", all=F)
 dim(epi_hbtrc_2ensg)
 
 # Merge by ensg2
-epi_hbtrc_2ensg=merge(epi_hbtrc_2ensg,epi_hbtrc_ensg22ensg, by.x="ensg2", by.y=".id", all=F)
+epi_hbtrc_2ensg <- merge(epi_hbtrc_2ensg,epi_hbtrc_ensg22ensg, by.x="ensg2", by.y=".id", all=F)
 
 # Size of the dataset with old ENSG IDs(ver 74) converted to ver 90
 dim(epi_hbtrc_2ensg)
@@ -106,19 +112,19 @@ ensg_hbtrc_ver90 <- unique(c(as.character(epi_hbtrc_2ensg$ensg1),as.character(ep
 length(ensg_hbtrc_ver90)
 
 # All ENSG IDs in ver 74
-ensg_hbtrc_ver74<-unique(c(as.character(epi_hbtrc$ensg1),as.character(epi_hbtrc$ensg2)))
+ensg_hbtrc_ver74 <- unique(c(as.character(epi_hbtrc$ensg1),as.character(epi_hbtrc$ensg2)))
 length(ensg_hbtrc_ver74)    
 
 # ENSG IDs present in ver 74 and not present in ver 90
-ensg_90_vs_74_hbtrc<-ensg_hbtrc_ver74[!ensg_hbtrc_ver74%in%ensg_hbtrc_ver90]
+ensg_90_vs_74_hbtrc <- ensg_hbtrc_ver74[!ensg_hbtrc_ver74%in%ensg_hbtrc_ver90]
 length(ensg_90_vs_74_hbtrc)#
 
 # Save to file
 #write.table(ensg_90_vs_74_hbtrc, file="ensg_90_vs_74_hbtrc.txt", quote=F, row.names=F, sep="\t")
 
-epi_hbtrc<-epi_hbtrc_2ensg[,c(6,7,3,4,5)]
-colnames(epi_hbtrc)=c("ensg1","ensg2","score","interaction_type","data_source")
-epi_hbtrc=epi_hbtrc[!duplicated(epi_hbtrc), ]
+epi_hbtrc <- epi_hbtrc_2ensg[,c(6,7,3,4,5)]
+colnames(epi_hbtrc) <- c("ensg1","ensg2","score","interaction_type","data_source")
+epi_hbtrc <- epi_hbtrc[!duplicated(epi_hbtrc), ]
 dim(epi_hbtrc)
 
 # Write results
@@ -126,7 +132,7 @@ dim(epi_hbtrc)
 #write.table(epi_hbtrc,file="epi_hbtrc.txt",sep="\t", quote=F, row.names=F)
 
 # Combine dataframes of LRG genes interactions and the rest
-epi_hbtrc_int=rbind(epi_hbtrc,epi_hbtrc_lrg_fin)
+epi_hbtrc_int <- rbind(epi_hbtrc,epi_hbtrc_lrg_fin)
 
 # Remove the duplicated undirrescted edges with the same score.
 # For example ENSG1-ENSG2 0.5 and ENSG2-ENSG1 0.5
