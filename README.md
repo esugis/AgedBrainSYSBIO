@@ -290,5 +290,5 @@ Folder has similar structure as **AgedBrainSYSBIO/data**
 ```
 4.2 The resulted integrated dataset cosists of two parts: integrated interactions and node attributes. These parts are stored in the sub-folder *integration* correspondingly in the files *integrated_int.txt* and *integrated_int_attributes.txt* . 
 ```
-    └──integration contains integrated interactions of individual data types and node attributes
+    └──integration *contains integrated interactions of individual data types and node attributes*
 ```
