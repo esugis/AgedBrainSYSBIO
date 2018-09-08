@@ -111,13 +111,13 @@ All necessary datasets will be downloaded into the corresponding locations:
 
 ```
 |── data
-│   |── adn contains microarray datasets in .nc format
-│   |── allenbrain contains microarray datasets downloaded from Allen Brain Atlas
-│   |── epistasis contains epistatic datasets computed based on ADNI, TGEN and HBTRC cohorts data
-│   |── gwas contains GWAS dataset
-│   |── intact contains PPI datasets downloaded from IntAct database
-│   |── pba contains PPI dataset related to brain ageing
-│   |── ps contains positive selection dataset
+│   |── adn #contains microarray datasets in .nc format
+│   |── allenbrain #contains microarray datasets downloaded from Allen Brain Atlas
+│   |── epistasis #contains epistatic datasets computed based on ADNI, TGEN and HBTRC cohorts data
+│   |── gwas #contains GWAS dataset
+│   |── intact #contains PPI datasets downloaded from IntAct database
+│   |── pba #contains PPI dataset related to brain ageing
+│   |── ps #contains positive selection dataset
 ```
 
 ## SCRIPTS
@@ -280,15 +280,15 @@ Folder has similar structure as **AgedBrainSYSBIO/data**
 
 ```
 └── results
-    |── adn contains resultig co-expression interactions
-    |── allenbrain contains co-expression intercation in brain regions related to Alzheimer's disease and aggregated expression in 221 brain regions
-    |── epistasis contains preprocessed epistatic interactions from ADNI, TGEN and HBTRC cohorts
-    |── gwas contains preprocessed data from GWAS studies
-    |── intact contains preprcessed PPI from IntAct database
-    |── pba contains preperocessed PPI related to brain ageing
-    |── ps contains preprocessed positive selection p-values
+    |── adn #contains resultig co-expression interactions
+    |── allenbrain #contains co-expression intercation in brain regions related to Alzheimer's disease and aggregated expression in 221 brain regions
+    |── epistasis #contains preprocessed epistatic interactions from ADNI, TGEN and HBTRC cohorts
+    |── gwas #contains preprocessed data from GWAS studies
+    |── intact #contains preprcessed PPI from IntAct database
+    |── pba #contains preperocessed PPI related to brain ageing
+    |── ps #contains preprocessed positive selection p-values
 ```
 4.2 The resulted integrated dataset cosists of two parts: integrated interactions and node attributes. These parts are stored in the sub-folder *integration* correspondingly in the files *integrated_int.txt* and *integrated_int_attributes.txt* . 
 ```
-    └──integration *contains integrated interactions of individual data types and node attributes*
+    └──integration #contains integrated interactions of individual data types and node attributes
 ```
